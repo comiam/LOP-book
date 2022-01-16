@@ -506,7 +506,7 @@ $\left.
 
     \exists j\in\{k+1,k+l\}\!: & & \mA_H\nvDash P_j(\ovl h)\Leftrightarrow\mA'\nvDash P_j(\ovl h)
   \end{array}
-  \right\}\Rightarrow\newline\Rightarrow\forall a\in|\mA|\!:\mA\vD [P_i(\ovl h)]^{c\in\sg_S\backslash\sg(S)}_a$ или $\mA\nvDash[P_j(\ovl h)]^{c\in\sg_S\backslash\sg(S)}_a\Rightarrow S$ выполнима на $\mA$. Пришли к противоречию. 
+  \right\}\Rightarrow\newline\Rightarrow\exists a\in|\mA|\!:\mA\vD [P_i(\ovl h)]^{c\in\sg_S\backslash\sg(S)}_a$ или $\mA\nvDash[P_j(\ovl h)]^{c\in\sg_S\backslash\sg(S)}_a\Rightarrow S$ выполнима на $\mA$. Пришли к противоречию. 
 
 Лемма доказана. (Подлежит редактированию)\\
 
@@ -1108,8 +1108,9 @@ $[\lnot P(f(y))\vee R(y)]^y_x=\lnot P(f(x))\vee R(x)$.
 
 Пусть даны подстановки $\theta=\begin{pmatrix}\lot x 1 n\\ \lot t 1 n\end{pmatrix},\;\lambda=\begin{pmatrix}\lot y 1 m\\ \lot u 1 m\end{pmatrix}$. Тогда как построить композицию подстановок? \\
 Строим матрицу $\theta\circ\lambda=\begin{pmatrix}\lot x 1 n & \lot y 1 m\\ [t_1]^\lambda\dots[t_n]^\lambda & \lot u 1 m\end{pmatrix}$, затем:\\
-1) $\forall i=\ovl{1,n}\!:$ если $x_i=[t_i]^\lambda$, то вычеркиваем $\begin{pmatrix}x_i\\{[t_i]^\lambda}\end{pmatrix}$ столбец. \\
-2) $\forall j=\ovl{1,m}\!:$ если $\exists x_i\!\!:x_i=y_j$, то мы должны вычеркнуть из матрицы $\begin{pmatrix}y_j\\u_j\end{pmatrix}$ столбец. 
+1) $\forall j=\ovl{1,m}\!:$ если $\exists x_i\!\!:x_i=y_j$, то мы должны вычеркнуть из матрицы $\begin{pmatrix}y_j\\u_j\end{pmatrix}$ столбец; \\
+2) $\forall i=\ovl{1,n}\!:$ если $x_i=[t_i]^\lambda$, то вычеркиваем $\begin{pmatrix}x_i\\{[t_i]^\lambda}\end{pmatrix}$ столбец. 
+
 
 Данные действия проделывать в строгом порядке!\\
 
