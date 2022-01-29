@@ -2393,33 +2393,45 @@ $
 
 \opr
 
-\textbf{Редукционный граф} терма $t\in\lmb$ - мультиорграф $G_\beta(t) = (T, \twoheadrightarrow)$, где $T = \{s\in\lmb\;|\;t\twoheadrightarrow s\}$.
+\textbf{Редукционный граф} терма $t\in\lmb$ - псевдоорграф $G_\beta(t) = (T, \twoheadrightarrow)$, где $T = \{s\in\lmb\;|\;t\twoheadrightarrow s\}$.
 
 \primerT{1}
 
-$t=(\lm xy.xy)uv$.\\
+Редукционный граф для $t=(\lm xy.xy)uv$:
 
-
+\begin{center}
+\scalebox{1.5}
+{
 \begin{tikzpicture}
 
-\draw[-latex,color=black, very thick](1,0) -- (4,0);
-\draw[-latex,color=black, very thick](4,0) -- (7,0);
+\draw[-latex,color=black,very thick](1,0) to[bend right=30] (4,0);
+\draw[-latex,color=black,very thick](4,0) to[bend right=30] (7,0);
 
-\draw[fill=black, color=black, very thick](1,0) circle (0.05);
-\draw[fill=black, color=black, very thick](4,0) circle (0.05);
-\draw[fill=black, color=black, very thick](7,0) circle (0.05);
+\draw[fill=black, color=black,very thick](1,0) circle (0.05);
+\draw[fill=black, color=black,very thick](4,0) circle (0.05);
+\draw[fill=black, color=black,very thick](7,0) circle (0.05);
 
-\node[scale=0.8] at (1,-0.3) {$(\lm xy.xy)uv$};
-\node[scale=0.8] at (4,-0.3) {$(\lm y.uy)v$};
-\node[scale=0.8] at (7,-0.3) {$uv$};
+\draw[-latex,color=black,very thick](1,0) arc (-5:-355:0.4);
+\draw[latex-,color=black,very thick](4,0) arc (-85:265:0.4);
+\draw[-latex,color=black,very thick](7,0) arc (-175:175:0.4);
 
+\draw[-latex,color=black,very thick](1,0) to[bend left=30] (7,0);
 
-\end{tikzpicture}\\
+\node[scale=0.6] at (1,-0.5) {$(\lm xy.xy)uv$};
+\node[scale=0.6] at (4,-0.5) {$(\lm y.uy)v$};
+\node[scale=0.6] at (7,-0.5) {$uv$};
+\end{tikzpicture}
+}
+\end{center}
+\leavevmode
 
 \primerT{2}
 
-$t=(\lm x.x)((\lm x.x)x)$.\\
+Редукционный граф для $t=(\lm x.x)((\lm x.x)x)$:
 
+\begin{center}
+\scalebox{1.5}
+{
 \begin{tikzpicture}
 
 \draw[-latex,color=black, very thick](1,0) to[bend left=20] (4,0);
@@ -2428,12 +2440,19 @@ $t=(\lm x.x)((\lm x.x)x)$.\\
 \draw[fill=black, color=black, very thick](1,0) circle (0.05);
 \draw[fill=black, color=black, very thick](4,0) circle (0.05);
 
-\node[scale=0.8] at (1,-0.7) {$(\lm x.x)((\lm x.x)x)$};
-\node[scale=0.8] at (4,-0.7) {$(\lm x.x)x$};
+\draw[-latex,color=black,very thick](1,0) arc (-5:-355:0.4);
+\draw[-latex,color=black,very thick](4,0) arc (-175:175:0.4);
 
+\node[scale=0.6] at (1,-0.6) {$(\lm x.x)((\lm x.x)x)$};
+\node[scale=0.6] at (4,-0.6) {$(\lm x.x)x$};
 \end{tikzpicture}
+}
+\end{center}
+\leavevmode
 
-Наличие двух стрелок обусловлено тем, что мы можем получить один и тот же терм редукциями по разным переменным.\\
+Наличие двух дуг из первой вершины во вторую обусловлено тем, что мы можем получить один и тот же терм редукциями по разным переменным.
+
+\newpage
 
 \opr 
 
@@ -2459,7 +2478,9 @@ $(\lm x.\underset{s}{\underbrace{y}})\underset{t}{\underbrace{((\lm x.xxx)(\lm x
 
 Тогда мы получим \textbf{н.ф.}, т.к. с $y$ мы уже ничего сделать не сможем.\\
 
-Наша задача - преобразовывать терм так, чтобы получать \textbf{н.ф.}, т.к. применять $\beta$-редукцию мы можем \underline{разными способами}.\\
+Наша задача - преобразовывать терм так, чтобы получать \textbf{н.ф.}, т.к. применять $\beta$-редукцию мы можем \underline{разными способами}.
+
+\newpage
 
 \teor 
 
