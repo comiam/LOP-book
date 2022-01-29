@@ -65,6 +65,9 @@
 \newcommand{\mL}{\mathfrak{L}}
 \newcommand{\mR}{\mathfrak{N}}
 \newcommand{\mM}{\mathfrak{M}}
+\newcommand{\msM}{\mathfrak{m}}
+\newcommand{\msP}{\mathfrak{p}}
+\newcommand{\mzero}{\mathfrak{0}}
 \newcommand{\dok}{\textsc{Доказательство:}}
 \newcommand{\dokup}{\textsc{Доказательство: упражнение.}}
 \newcommand{\bezdok}{\textsc{Без доказательства.}}
@@ -96,13 +99,19 @@
 
 \newcommand{\lm}{\lambda}
 \newcommand{\lmb}{\Lambda}
+\newcommand{\kb}{\mathcal{B}}
+\newcommand{\kc}{\mathcal{C}}
 \newcommand{\ki}{\mathcal{I}}
 \newcommand{\kk}{\mathcal{K}}
 \newcommand{\ks}{\mathcal{S}}
+\newcommand{\kw}{\mathcal{W}}
+\newcommand{\ky}{\mathcal{Y}}
 
 \newcommand{\redb}{\underset{\beta}{\longrightarrow}}
 \newcommand{\reda}{\underset{\alpha}{\longrightarrow}}
 \newcommand{\rede}{\underset{\eta}{\longrightarrow}}
+\newcommand{\redr}{\rightarrow_R}
+\newcommand{\redrm}{\twoheadrightarrow_R}
 
 \newcommand{\modal}{M\!O\!D}
 \newcommand{\st}[1]{st_#1}
@@ -110,6 +119,9 @@
 \newcommand{\need}{\scalebox{0.75}{$\Box$}}
 \newcommand{\bigs}[1]{\scalebox{1.3}{$#1$}}
 \newcommand{\chf}{\bigs\mu}
+
+\newcommand{\lfunction}[1]{\textcolor{purple}{\textbf{#1}}}
+\newcommand{\churchnum}[1]{{\underline{#1}}}
     
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -2323,7 +2335,7 @@ $(\lm\ovl x.s)\ovl x\redb s$, где $\ovl x=\lod x 1 n$.
 
 5) $s\to t\Rightarrow\lm x.s\to\lm x.t $.\\
 
-\opr 
+\opr
 
 Говорят, что терм $s$ \textbf{подобен} терму $t\;(s\sim t)\Leftrightarrow s\to t$ или $t\to s$.
 
@@ -2351,11 +2363,108 @@ $
 \end{center}
 \leavevmode
 
+\opr
+
+Пусть $R\subseteq \lmb^2$ - бинарное отношение, определённое на множестве $\lm$-термов.
+
+Тогда отношение $\redr$ называется \textbf{одношаговой $R$-редукцией}, если $\newline\forall t, s, u  \in \lmb$ верно:
+
+1) $(t, s)\in R\Rightarrow t\redr s$;
+
+2) $t\redr s\Rightarrow ut\redr us$;
+
+3) $t\redr s\Rightarrow tu\redr su$;
+
+4) $t\redr s\Rightarrow \lm x.t \redr \lm x.s$.\\
+
+\opr
+
+Пусть $s\redr t$. Тогда терм $s$ называется \textbf{$R$-редексом} (\underline{red}ucible \underline{ex}pression), а терм $t$ - \textbf{$R$-свёрткой}.\\
+
+\opr
+
+\textbf{Многошаговая $R$-редукция} - отношение $\redrm$, которое является рефлексивным транзитивным замыканием $\beta$-редукции, т. е. $\forall s, t, u\in\lmb$ верны следующие условия:
+
+1) $t\redr s\Rightarrow t\redrm s$;
+
+2) $t\redrm t$;
+
+3) $(t\redrm s\;\&\;s\redrm u)\Rightarrow t\redrm u$.\\
+
+\opr
+
+\textbf{Редукционный граф} терма $t\in\lmb$ - псевдоорграф $G_\beta(t) = (T, \twoheadrightarrow)$, где $T = \{s\in\lmb\;|\;t\twoheadrightarrow s\}$.
+
+\primerT{1}
+
+Редукционный граф для $t=(\lm xy.xy)uv$:
+
+\begin{center}
+\scalebox{1.5}
+{
+\begin{tikzpicture}
+
+\draw[-latex,color=black,very thick](1,0) to[bend right=30] (4,0);
+\draw[-latex,color=black,very thick](4,0) to[bend right=30] (7,0);
+
+\draw[fill=black, color=black,very thick](1,0) circle (0.05);
+\draw[fill=black, color=black,very thick](4,0) circle (0.05);
+\draw[fill=black, color=black,very thick](7,0) circle (0.05);
+
+\draw[-latex,color=black,very thick](1,0) arc (-5:-355:0.4);
+\draw[latex-,color=black,very thick](4,0) arc (-85:265:0.4);
+\draw[-latex,color=black,very thick](7,0) arc (-175:175:0.4);
+
+\draw[-latex,color=black,very thick](1,0) to[bend left=30] (7,0);
+
+\node[scale=0.6] at (1,-0.5) {$(\lm xy.xy)uv$};
+\node[scale=0.6] at (4,-0.5) {$(\lm y.uy)v$};
+\node[scale=0.6] at (7,-0.5) {$uv$};
+\end{tikzpicture}
+}
+\end{center}
+\leavevmode
+
+\primerT{2}
+
+Редукционный граф для $t=(\lm x.x)((\lm x.x)x)$:
+
+\begin{center}
+\scalebox{1.5}
+{
+\begin{tikzpicture}
+
+\draw[-latex,color=black, very thick](1,0) to[bend left=20] (4,0);
+\draw[-latex,color=black, very thick](1,0) to[bend right=20] (4,0);
+
+\draw[fill=black, color=black, very thick](1,0) circle (0.05);
+\draw[fill=black, color=black, very thick](4,0) circle (0.05);
+
+\draw[-latex,color=black,very thick](1,0) arc (-5:-355:0.4);
+\draw[-latex,color=black,very thick](4,0) arc (-175:175:0.4);
+
+\node[scale=0.6] at (1,-0.6) {$(\lm x.x)((\lm x.x)x)$};
+\node[scale=0.6] at (4,-0.6) {$(\lm x.x)x$};
+\end{tikzpicture}
+}
+\end{center}
+\leavevmode
+
+Наличие двух дуг из первой вершины во вторую обусловлено тем, что мы можем получить один и тот же терм редукциями по разным переменным.
+
+\newpage
+
 \opr 
 
 $\lm$-терм $t$ имеет \textbf{нормальную форму}, если к нему применимо либо только $\alpha$-преобразование, либо вообще ничего нельзя применить.\\
 
-Основная цель наших преобразований состоит в том, чтобы привести терм к \textbf{н.ф.}. 
+Основная цель наших преобразований состоит в том, чтобы привести терм к \textbf{н.ф.}. Для этого существуют две основные стратегии: нормальная и аппликативная.\\
+
+\opr
+
+1) При \textbf{нормальной стратегии} мы сокращаем самый левый \underline{внешний} редекс.
+
+2) При \textbf{аппликативной стратегии} мы сокращаем самый левый \underline{внутрен}-\underline{ний} редекс.\\
 
 \primer
 
@@ -2367,15 +2476,33 @@ $\lm$-терм $t$ имеет \textbf{нормальную форму}, если
 
 $(\lm x.\underset{s}{\underbrace{y}})\underset{t}{\underbrace{((\lm x.xxx)(\lm x.xxx))}}\redb y$.
 
-Тогда мы получим \textbf{н.ф.}, т.к $y$ мы уже ничего сделать не можем.\\
+Тогда мы получим \textbf{н.ф.}, т.к. с $y$ мы уже ничего сделать не сможем.\\
 
-Наша задача - преобразовывать терм так, чтобы получать \textbf{н.ф.}, т.к. применять $\beta$-редукцию мы можем \underline{разными способами}.\\
+Наша задача - преобразовывать терм так, чтобы получать \textbf{н.ф.}, т.к. применять $\beta$-редукцию мы можем \underline{разными способами}.
+
+\newpage
 
 \teor 
 
-Если $s\to t$ и $t$ имеет \textbf{н.ф.}, то последовательность редукций, что начинается с терма $s$ и состоит в применении правила редукции внешнему(самому левому) редексу, всегда завершается и приводит терм $s$ к \textbf{н.ф.}.
+Если $s\to t$ и $t$ имеет \textbf{н.ф.}, то нормальная стратегия всегда успешно приведёт $s$ к \textbf{н.ф.}.
 
 \bezdok\\
+
+Тогда зачем нам аппликативная стратегия, если она, в отличие от нормальной, не всегда приводит терм к \textbf{н.ф.}? При нормальной стратегии зачастую приходится подставлять огромные выражения, это проще показать на примере.
+
+\primer
+
+Приведём к \textbf{н.ф.} терм $t=(\lm xy.yx)\;((\lm x.xx)\;b)\;((\lm x.cxb)\;(fgh))$.
+
+Применим нормальную стратегию:
+
+$t\redb((\lm x.cxb)\;(fgh))\;\;((\lm x.xx)\;b)\redb(c(fgh)b)\;(bb)$.
+
+Теперь применим аппликативную стратегию:
+
+$t\redb(\lm xy.yx)\;(bb)\;(c(fgh)b)\redb(c(fgh)b)\;(bb)$.
+
+С другой стороны, при нормальной стратегии мы не считаем ничего лишнего.\\
 
 \teorT{Чёрча-Россера или правило ромба}
 
@@ -2398,6 +2525,8 @@ $(\lm x.\underset{s}{\underbrace{y}})\underset{t}{\underbrace{((\lm x.xxx)(\lm x
 \node[scale=1.2] at (0,-2.8) {$u$};
 \end{tikzpicture}
 \end{center}
+
+\newpage
 
 \sled
 
@@ -2433,7 +2562,7 @@ $t_1\sim t_2\Rightarrow\exists u\!:t_1\to u$ и $t_2\to u$.
 
 \sled 
 
-Если $t\sim t_1$ и $t\sim t_2$, $t_1$ и $t_2$ имеют \textbf{н.ф.}, то $t_1$ и $t_2$ \textbf{равны с точностью до $\alpha$-преобразования}, т.е. с точностью до переименования переменных.\\
+Если $t\sim t_1$ и $t\sim t_2$, $t_1$ и $t_2$ имеют \textbf{н.ф.}, то $t_1$ и $t_2$ \textbf{равны с точностью до $\alpha$-преобразования}, т.е. с точностью до переименования переменных.
 
 \dok 
 
@@ -2445,18 +2574,28 @@ $(t\sim t_1\text{ и }t\sim t_2)\to t_1\sim t_2\Rightarrow\exists u\!\!:t_1\reda
 
 \msubsection{Комбинаторы}
 
-Еще раз вспомним, что \textbf{комбинатором} называется терм без свободных переменных, т.е. все переменные связаны абстракциями. С логической точки зрения, для программирования вполне достаточно 3х комбинаторов, т.е. из них можно всё вывести. Остальные же комбинаторы используются для каких-либо иных целей. \\
-\newpage
+Еще раз вспомним, что \textbf{комбинатором} называется терм без свободных переменных, т.е. все переменные связаны абстракциями. С логической точки зрения, для программирования вполне достаточно комбинаторов
+$\ki,\;\kk,\;\ks$, т.е. из них можно всё вывести. Остальные же комбинаторы используются для каких-либо иных целей. \\
 
 \opr 
 
-3 основными комбинаторами являются:
+Основными комбинаторами являются:
 
-1) $\ki:=\lm x.x$;
+1) $\ki:=\lm x.x$ - \textbf{тождественный комбинатор};
 
-2) $\kk:=\lm xy.x$;
+2) $\kb:=\lm xyz.x(yz)$ - \textbf{композитор};
 
-3) $\ks:=\lm xyz.(xz)(yz)$.\\
+3) $\kc:=\lm xyz.xzy$ - \textbf{пермутатор};
+
+4) $\kk:=\lm xy.x$ - \textbf{канцелятор};
+
+5) $\ks:=\lm xyz.(xz)(yz)$ - \textbf{коннектор};
+
+6) $\kw:=\lm xy.xyy$ - \textbf{дупликатор};
+
+7) $\omega:=\lm x.xx$;
+
+8) $\Omega:=\omega\omega=(\lm x.xx)(\lm x.xx)$.\\
 
 \predl 
 
@@ -2464,9 +2603,15 @@ $\forall s,t,u\in\lmb\!:$
 
 1) $\ki s\sim s$;
 
-2) $\kk st\sim s$;
+2) $\kb stu\sim s(tu)$;
 
-3) $\ks stu\sim (su)(tu)$.
+3) $\kc stu\sim sut$;
+
+4) $\kk st\sim s$;
+
+5) $\ks stu\sim (su)(tu)$;
+
+6) $\kw st\sim stt$.
 
 \dok
 
@@ -2484,9 +2629,209 @@ $\forall s,t,u\in\lmb\!:$
 
 Для $\forall\lm\text{-терма }t\;\exists t'\!\!:\;t'$ - композиция $\ki,\kk$ и переменных такая, что\\ $FV(t')=FV(t)$ и $t'\sim t$.
 
-\bezdok\\
+\bezdok
 
-В чём идея следствия? Пусть, допустим, у нас существует огромный терм, но мы его можем преобразовать в такой вид, что в нём будут составляющие только того вида, что обозначены в следствии. На этом обзор $\lm$-исчисления окончен.
+В чём идея следствия? Пусть, допустим, у нас существует огромный терм, но мы его можем преобразовать в такой вид, что в нём будут составляющие только того вида, что обозначены в следствии.
+
+\msubsection{Выражения $\lm$-исчисления}
+
+Теперь у нас есть возможность определить конкретные арифметические и логические операции, а также рекурсию.\\
+
+\opr
+
+\textbf{Комбинаторами истинности} являются:
+
+1) $true = \lm tf.t$
+
+2) $false = \lm tf.f$\\
+
+Нетрудно заметить, что комбинаторы истинности действуют как канцеляторы с той лишь разницей, что они "отменяют"\;разные входные параметры.\\
+
+\opr
+
+\textbf{Логические конструкции} $\lm$-исчисления:
+
+1) $\lfunction{if} \;A\;\lfunction{then}\;B\;\lfunction{else}\;C = \lm bxy.bxy$;
+
+2) $\lfunction{not}=\lfunction{if}\;p\;\lfunction{then}\;false\;\lfunction{else}\;true=\lm b.\;false\;true$;
+
+3) $\lfunction{and}=\lfunction{if}\;p\;\lfunction{then}\;q\;\lfunction{else}\;false=\lm xy.xy\;false$;
+
+4) $\lfunction{or}=\lfunction{if}\;p\;\lfunction{then}\;true\;\lfunction{else}\;q=\lm xy.x\;true\;y$.\\
+
+\primerT {1 с $\lfunction{not}$}
+
+$\lfunction{not}\;false=\lfunction{if}\;false\;\lfunction{then}\;false\;\lfunction{else}\;true =\newline=(\lm bxy.bxy)false\;false\;true\redb false\;false\;true=\newline=(\lm tf.f)false\;true\redb (\lm f.f)\;true\redb
+true$.\\
+
+\primerT {2 с $\lfunction{and}$}
+
+$\lfunction{and}\;true\;false = (\lm xy.xy\;false)\;true\;false\redb true\;false\;false =\newline= (\lm tf.t)\;false\;false\redb false$.
+
+В $\lfunction{or}$ аргументы подставляются так же, как и в $\lfunction{and\\}$.\\
+
+\opr
+
+1) $\lfunction{pair}=\lm xyf.fxy$ - \textbf{упорядоченная пара};
+
+2) $\lfunction{fst}=\lm p.p\;true$ - \textbf{операция проекции на первый элемент};
+
+3) $\lfunction{snd}=\lm p.p\;false$ - \textbf{операция проекции на второй элемент}.\\
+
+\newpage
+
+\primer
+
+$\lfunction{snd}(\lfunction{pair}\;AB) = \lfunction{snd}((\lm xyf.fxy)\;AB) \redb (\lm p.p\;false)(\lm f.fAB)\redb\newline\redb (\lm f.fAB)(\lm tf.f)\redb (\lm tf.f)AB\redb B$.\\
+
+\opr
+
+\textbf{Числами} или \textbf{нумералами Чёрча} являются:
+
+$\churchnum{0}=\lm sz.z$;
+
+$\churchnum{1}=\lm sz.sz$;
+
+$\churchnum{2}=\lm sz.s(sz)$;
+
+$\churchnum{3}=\lm sz.s(s(sz))$;
+
+...
+
+$\churchnum{n}=\lm sz.s^nz$.
+
+Обратите внимание, что \churchnum{0} с точностью до переменных похож на комбинатор $false$, но последний является логическим, а не арифметическим комбинатором.
+
+\opr
+
+В $\lm$-исчислении существуют следующие \textbf{операции над числами}:
+
+1) $\lfunction{succ}=\lm nsz.s(nsz)$ - увеличение числа на 1;
+
+2) $\lfunction{iszro}=\lm n.n(\lm x.false)\;true$ - проверка числа на равество нулю;
+
+3) $\lfunction{plus}=\lm mnsz.ms(nsz)$ - сумма чисел;
+
+4) $\lfunction{mult}=\lm mnsz.m(ns)z$ - произведение чисел.\\
+
+\predl
+
+Данные арифметические операции корректно определены.
+
+\dok
+
+1) $\lfunction{succ}\;\;\churchnum{n}=(\lm nsz.s(nsz))\;(\lm sz.s^nz)\redb\lm sz.s((\lm sz.s^nz)sz)\redb\newline\redb\lm sz.s(s^nz)=\lm sz.s^{n + 1}z=\churchnum{n + 1}$.
+
+2) Рассмотрим 2 случая:
+
+\underline{Сл.1.} Пусть $\churchnum{n} = \churchnum{0}$, тогда $\lfunction{iszro}\;\churchnum{0}\redb (\lm sz.z)\;(\lm x.false)\;true\redb true$.
+
+\underline{Сл.2.} Пусть $\churchnum{n}>\churchnum{0}$, тогда $\lfunction{iszro}\;\churchnum{n}\redb (\lm sz.s^nz)\;(\lm x.false)\;true=\newline=(\lm sz.s(s^{n-1}z))\;(\lm x.false)\;true\redb (\lm x.false)((\lm x.false)
+^{n-1}true))\redb false$.
+
+3) $\lfunction{plus}\;\churchnum{m}\;\churchnum{n}\redb\lm sz.(\lm sz.s^mz)s\;((\lm sz.s^nz)sz)\redb\newline\redb\lm sz.(\lm sz.s^mz)\;s\;(s^nz)\redb\lm sz.(s^m\;(s^nz))\redb\lm sz.s^{m + n}z=\churchnum{m + n}$.
+
+4) Доказывается на семинарах.
+
+\opr
+
+Введём следующие вспомогательные функции:
+
+$\lfunction{zp}=\lfunction{pair}\;\churchnum{0}\;\churchnum{0}$;
+
+$\lfunction{sp}=\lm\msP .\lfunction{pair}\;(\lfunction{snd}\;\msP)\;(\lfunction{succ}\;(\lfunction{snd}\;\msP))$.
+
+Вторая функция работает так:
+
+$\lfunction{sp}\;(\lfunction{pair}\;\churchnum{i}\;\churchnum{j}) = \lfunction{pair}\;\churchnum{j}\;\;\churchnum{j + 1}$
+
+$\lfunction{sp}^0\;(\lfunction{zp})=\lfunction{pair}\;\churchnum{0}\;\;\churchnum{0}$
+
+$\lfunction{sp}^m\;(\lfunction{zp})=\lfunction{pair}\;\churchnum{m - 1}\;\;\churchnum{m}$
+
+Определим \textbf{функцию предыдущего числа} для всех $\msM >\mzero$:
+
+$\lfunction{pred}=\lm \msM .\lfunction{fst}\;(\msM\;\lfunction{sp}\;\lfunction{zp})$.\\
+
+\predl
+
+Функция предыдущего числа корректно определена.\\
+
+Функция предыдущего числа позволяет реализовывать в лямбда-исчисле- нии рекурсию, так как в нём \underline{нет циклов}. Рекурсия реализуется через так называемые неподвижные точки.\\
+
+\teorT{о неподвижной точке}
+
+$\forall F \in \lmb$ существует неподвижная точка $X$ такая, что $FX \redb X$.
+
+\dok
+
+Введём $W=\lm x.F(xx) \text{ и } X=WW$. Тогда $X=WW=\newline=(\lm x.F(xx))W\redb F(WW)=FX$.
+
+Теорема доказана.\\
+
+\teorT{о комбинаторе неподвижной точки}
+
+Существует комбинатор неподвижной точки $\ky$ такой, что $\forall F\in\lmb$ выполнено $F(\ky F)\redb\ky F$.
+
+\dok
+
+Введём $\ky = \lm f.(\lm x.f(xx))(\lm x.f(xx))$. Тогда для любого $F$ имеем:
+
+$\ky F\redb (\lm x.F(xx))(\lm x.F(xx))\redb F(\underset{\ky F}{\underbrace{(\lm x.F(xx))(\lm x.F(xx)}})=F(\ky F).$
+
+Теорема доказана.\\
+
+\oprT{комбинаторы неподвижной точки}
+
+1) $\ky=\lm f.(\lm x.f(xx))(\lm x.f(xx))$ - \textbf{комбинатор Карри};
+
+2) $\Theta=(\lm xy.y(xxy))(\lm xy.y(xxy))$ - \textbf{комбинатор Тьюринга}.\\
+
+\opr
+
+Определим функцию факториала "как есть":
+
+$\lfunction{fac}=\lm n.\lfunction{if}\;(\lfunction{iszro}\; n)\;\lfunction{then}\;\churchnum{1}\;\lfunction{else}\;(\lfunction{mult}\;n\;(\lfunction{fac}\;(\lfunction{pred}\;n)))$.
+
+Такое определение факториала плохо тем, что наличие $\lfunction{fac}$ внутри тела функции сделает $\lm$-терм бесконечным. Но мы можем завести новую переменную и вынести $\lfunction{fac}$ изнутри $\beta$-редукцией наоборот:
+
+$\lfunction{fac}=\underset{fac'}{\underbrace{(\lm fn.(\lfunction{if}\;(\lfunction{iszro}\; n)\;\lfunction{then}\;\churchnum{1}\;\lfunction{else}\;(\lfunction{mult}\;n\;(f\;(\lfunction{pred}\;n))))}}\;\lfunction{fac}$.
+
+Отсюда видно, что $\lfunction{fac}$ - неподвижная точка вспомогательной функции $fac'$, и по теореме о комбинаторе неподвижной точки мы сможем записать определение функции так:
+
+$\lfunction{fac} = \ky\;fac'$ - \textbf{функция факториала}.\\
+
+\primer
+
+Найдём факториал от пяти.
+
+1) Для $\churchnum{n}=\churchnum{0}$ верно
+
+$\lfunction{fac}\;\churchnum{0}=\ky\;fac'\;\churchnum{0}=fac'\;(\ky\;fac')\;\churchnum{0}=\newline=(\lm fn.(\lfunction{if}\;(\lfunction{iszro}\; n)\;\lfunction{then}\;\churchnum{1}\;\lfunction{else}\;(\lfunction{mult}
+\;n\;(f\;(\lfunction{pred}\;n))))\;(\ky\;fac')\;\churchnum{0}\redb\newline\redb\lfunction{if}\;(\underset{true}{\underbrace{\lfunction{iszro}\; \churchnum{0}}})\;\lfunction{then}\;\churchnum{1}\;\lfunction{else}
+\;(\lfunction{mult}\;\churchnum{0}\;((\ky\;fac')\;(\lfunction{pred}\;\churchnum{0})))\redb\churchnum{1}$.
+
+2) $\forall\;\churchnum{n}>\churchnum{0}$ верно
+
+$\lfunction{fac}\;\churchnum{n}=\ky\;fac'\;\churchnum{n}=fac'\;(\ky\;fac')\;\churchnum{n}=\newline=(\lm fn.(\lfunction{if}\;(\lfunction{iszro}\; n)\;\lfunction{then}\;\churchnum{1}\;\lfunction{else}\;(\lfunction{mult}
+\;n\;(f\;(\lfunction{pred}\;n))))\;(\ky\;fac')\;\churchnum{n}\redb\newline\redb\lfunction{if}\;(\underset{false}{\underbrace{\lfunction{iszro}\; \churchnum{n}}})\;\lfunction{then}\;\churchnum{1}\;\lfunction{else}
+\;(\lfunction{mult}\;\churchnum{n}\;((\ky\;fac')\;(\lfunction{pred}\;\churchnum{n})))\redb\newline\redb\lfunction{mult}\;\churchnum{n}\;(\ky\;fac'\;\churchnum{n - 1})$.
+
+3) Теперь факториалы для положительных $\churchnum{n}$ легко находятся:
+
+$\lfunction{fac}\;\churchnum{1}=\ky\;fac'\;\churchnum{1}\redb\lfunction{mult}\;\churchnum{1}\;(\ky\;fac'\;\churchnum{0})=\churchnum{1}$;
+
+$\lfunction{fac}\;\churchnum{2}=\ky\;fac'\;\churchnum{2}\redb\lfunction{mult}\;\churchnum{2}\;(\ky\;fac'\;\churchnum{1})=\churchnum{2}$;
+
+$\lfunction{fac}\;\churchnum{3}=\ky\;fac'\;\churchnum{3}\redb\lfunction{mult}\;\churchnum{3}\;(\ky\;fac'\;\churchnum{2})=\churchnum{6}$;
+
+$\lfunction{fac}\;\churchnum{4}=\ky\;fac'\;\churchnum{4}\redb\lfunction{mult}\;\churchnum{4}\;(\ky\;fac'\;\churchnum{3})=\churchnum{24}$;
+
+$\lfunction{fac}\;\churchnum{5}=\ky\;fac'\;\churchnum{5}\redb\lfunction{mult}\;\churchnum{5}\;(\ky\;fac'\;\churchnum{4})=\churchnum{120}$.\\
+
+Хотелось бы отметить, что для вычисления $5!$ потребовалось бы применить 66066 $\beta$-редукций, если их делать по одной, а не как в примере выше.\\
+
+При помощи помощи этих и многих других функций мы можем записать практически любое выражение. На этом заканчивается обзор $\lm$-исчисления.\\
 
 \msection{Модальная логика}
 \setcounter{spar}{0}
@@ -2502,7 +2847,7 @@ $\forall s,t,u\in\lmb\!:$
 
 "Необходимое событие"{} или "возможное событие"{} - это и является \textbf{модальностью}.
 
-Сначала мы будем рассматривать пропозициональную модальную логику, где нет никаких кванторов.
+Сначала мы будем рассматривать пропозициональную модальную логику, где нет никаких кванторов.\\
 
 \opr 
 
@@ -2578,9 +2923,7 @@ $W$ - множество миров;
 \end{tikzpicture}
 \end{center}
 
-Здесь мы находимся в мире $w_1$ и рассуждаем, что произойдёт завтра. И у нас есть два исхода: победа(в $w_2$) или поражение(в $w_3$). А потом уже, если мы в какой-то мир из $w_2$ или $w_3$ в итоге попали, то дальше, предположим, эти исходы слились и на следующий день он уже гарантированно победил. А может наоборот случиться и события ещё сильнее разветвлятся, т.е. появится еще больше различных миров. Здесь отношение $R$ - как раз соединения миров.
-
-\newpage
+Здесь мы находимся в мире $w_1$ и рассуждаем, что произойдёт завтра. И у нас есть два исхода: победа(в $w_2$) или поражение(в $w_3$). А потом уже, если мы в какой-то мир из $w_2$ или $w_3$ в итоге попали, то дальше, предположим, эти исходы слились и на следующий день он уже гарантированно победил. А может наоборот случиться и события ещё сильнее разветвлятся, т.е. появится еще больше различных миров. Здесь отношение $R$ - как раз соединения миров.\\
 
 \opr 
 
