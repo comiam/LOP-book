@@ -2730,7 +2730,7 @@ $\churchnum{n}=\lm sz.s^nz$.
 \underline{Сл.1.} Пусть $\churchnum{n} = \churchnum{0}$, тогда $\lfunction{iszro}\;\churchnum{0}\redb (\lm sz.z)\;(\lm x.false)\;true\redb true$.
 
 \underline{Сл.2.} Пусть $\churchnum{n}>\churchnum{0}$, тогда $\lfunction{iszro}\;\churchnum{n}\redb (\lm sz.s^nz)\;(\lm x.false)\;true=\newline=(\lm sz.s(s^{n-1}z))\;(\lm x.false)\;true\redb (\lm x.false)((\lm x.false)
-^{n-1}true))\redb false$.
+^{n-1}true))\redb\newline\redb false$.
 
 3) $\lfunction{plus}\;\churchnum{m}\;\churchnum{n}\redb\lm sz.(\lm sz.s^mz)s\;((\lm sz.s^nz)sz)\redb\newline\redb\lm sz.(\lm sz.s^mz)\;s\;(s^nz)\redb\lm sz.(s^m\;(s^nz))\redb\lm sz.s^{m + n}z=\churchnum{m + n}$.
 
