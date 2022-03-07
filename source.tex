@@ -22,6 +22,7 @@
 \usepackage{hyperref}
 \usepackage{wrapfig}
 \usepackage{cancel}
+\usepackage{pgfplots}
 
 \title{Логические основы программирования}
 \author{Лекции Г.Э. Яхъяевой для 2 курса ФИТ НГУ}
@@ -73,6 +74,8 @@
 \newcommand{\bezdok}{\textsc{Без доказательства.}}
 \newcommand{\rightdok}{\boxed{(\Rightarrow)}}
 \newcommand{\leftdok}{\boxed{(\Leftarrow)}}
+\newcommand{\galoisup}{^\uparrow}
+\newcommand{\galoisdown}{^\downarrow}
 
 \newcommand{\ovl}[1]{\overline{#1}}
 
@@ -2727,11 +2730,13 @@ $\churchnum{n}=\lm sz.s^nz$.
 \underline{Сл.1.} Пусть $\churchnum{n} = \churchnum{0}$, тогда $\lfunction{iszro}\;\churchnum{0}\redb (\lm sz.z)\;(\lm x.false)\;true\redb true$.
 
 \underline{Сл.2.} Пусть $\churchnum{n}>\churchnum{0}$, тогда $\lfunction{iszro}\;\churchnum{n}\redb (\lm sz.s^nz)\;(\lm x.false)\;true=\newline=(\lm sz.s(s^{n-1}z))\;(\lm x.false)\;true\redb (\lm x.false)((\lm x.false)
-^{n-1}true))\redb false$.
+^{n-1}true))\redb\newline\redb false$.
 
 3) $\lfunction{plus}\;\churchnum{m}\;\churchnum{n}\redb\lm sz.(\lm sz.s^mz)s\;((\lm sz.s^nz)sz)\redb\newline\redb\lm sz.(\lm sz.s^mz)\;s\;(s^nz)\redb\lm sz.(s^m\;(s^nz))\redb\lm sz.s^{m + n}z=\churchnum{m + n}$.
 
 4) Доказывается на семинарах.
+
+Предложение доказано.\\
 
 \opr
 
@@ -3530,7 +3535,7 @@ $\forall w'\in W'\;\exists s\in S\;\exists\lot v 1 n\in W'\!\!:(s,v_1)\in R',(v_
 
 Условие "\textit{Зиг}"{} просто перешёл в "\textit{Морфизм}"{}. Здесь так же важно учесть, что "$\Rightarrow$"{} \underline{сопоставима с импликацией}.\\
 
-Данное выше определение очень сильно похоже на бисимуляцию. В чём различие? Если в бисимуляции могло так сложиться, что один мир переходит в два других мира на иной модели, а те два мира с другой модели в один мир(см. пример после 37.2.), то ограниченный морфизм не позволит из одного мира попасть в два, только в один мир. Т.е. получается, что ограниченный морфизм - это бисимуляция с \textit{навешенной} функциональностью и для любого мира существует только \underline{единственный} образ в иной модели. Т.е. $f$ - отношение бисимуляции, обладающее функциональностью.\\
+Данное выше определение очень сильно похоже на бисимуляцию. В чём различие? Если в бисимуляции могло так сложиться, что один мир переходит в два других мира на иной модели, а те два мира с другой модели в один мир(см. пример после 38.2.), то ограниченный морфизм не позволит из одного мира попасть в два, только в один мир. Т.е. получается, что ограниченный морфизм - это бисимуляция с \textit{навешенной} функциональностью и для любого мира существует только \underline{единственный} образ в иной модели. Т.е. $f$ - отношение бисимуляции, обладающее функциональностью.\\
 
 \opr 
 
@@ -4415,7 +4420,7 @@ $S(A_1,A_2)\ampersand FA_1$ - разделима, но $S(A_1,A_2)$ - нет.\ne
 
 \teor
 
-Пусть $C$ - класс линейных потоков. Пусть $M\!L$ содержит модальности Приота(опр. 44.6.), тогда $M\!L$ - разделима над $C\Leftrightarrow M\!L$ - выразительно полна.\\
+Пусть $C$ - класс линейных потоков. Пусть $M\!L$ содержит модальности Приота(опр. 45.6.), тогда $M\!L$ - разделима над $C\Leftrightarrow M\!L$ - выразительно полна.\\
 
 \teor
 
@@ -4438,36 +4443,80 @@ $Stavi(P_1,P_2)=\exists s\Big(t<s\ampersand\exists u\big(t<u<s\ampersand\lnot P_
 
 Многозначная логика — тип формальной логики, в которой допускается более двух истинностных значений для высказываний. В настоящее время существует очень много других систем многозначной логики, которые в свою очередь могут быть сгруппированы по классам. Важнейшими из таких классов являются частичные логики и нечёткие логики.\\
 
-Первым, кто разработал многозначную логику высказываний, был Лукасевич в 1920 году.\\
+Первым, кто разработал многозначную логику высказываний, был Лукасевич в 1920 году. В качестве исходных логических связок берутся отрицание $\lnot$ и импликация $\rightarrow$.\\
 
-\opr
-
-\textbf{Трёхзначная логика Лукасевича} задаётся истинностями: 
+\oprT{Истинности логики Лукасевича} 
 
 1 - "\textit{True}"{}, 
 
 0 - "\textit{False}"{}, 
 
-1/2 - "\textit{Unknown}"{}.
+1/2 - "\textit{Безразлично(Unknown)}"{}.\\
+
+\oprT{истинность логических связок в логике Лукасевича}
+
+Определим истинность отрицания и импликации в логике Лукасевича $L_3$:
+
+1) Отрицание: $\lnot 1/2=1/2$.
+
+2) Импликация: $1\rightarrow 1/2=1/2\rightarrow 0=1/2$, $\newline 0\rightarrow 1/2=1/2\rightarrow 1/2=1/2\rightarrow 1=1$;
+
+3) При аргументаeх из множества $\{0,\;1\}$ используются значения из классической (двузначной) логики.\\
+
+Доопределим остальные логические связки:
+
+1) $x\vee y:=(x\rightarrow y)\rightarrow y$ - дизъюнкция;
+
+2) $x\ampersand y:=\lnot(\lnot x\vee \lnot y)$ - конъюнкция;
+
+3) $x\leftrightarrow y:=(x\rightarrow y)\ampersand(y\rightarrow x)$ - эквиваленция.
 
 Таблицы истинности в данной логике задаются следующим образом:
 
 \begin{center}
-\begin{tabular}{|c|c|c|c|llll|l|l|l|l|llll|c|c|}
-\cline{1-4} \cline{9-12} \cline{17-18}
-\textbf{OR} & \textbf{F} & \textbf{T} & \textbf{U} & & & & & \textbf{AND} & \textbf{F} & \textbf{T} & \textbf{U} & & & & & \textbf{NOT} & \\ \cline{1-4} \cline{9-12} \cline{17-18} 
-\textbf{F} & F & T & U & & & & & \textbf{F} & F & F & F & & & & & \textbf{F} & T \\ 
-\cline{1-4} \cline{9-12} \cline{17-18} 
-\textbf{T} & T & T & T & & & & & \textbf{T} & F & T & U & & & & & \textbf{T} & F \\ 
-\cline{1-4} \cline{9-12} \cline{17-18} 
-\textbf{U} & U & T & U & & & & & \textbf{U} & F & U & U & & & & & \textbf{U} & U \\ 
-\cline{1-4} \cline{9-12} \cline{17-18} 
+\begin{tabular}{|c|c|llll|c|c|c|c|}
+\cline{1-2} \cline{7-10}
+\textbf{NOT} & & & & & & \textbf{$\rightarrow$} & \textbf{0} & \textbf{1/2} & \textbf{1} \\
+\cline{1-2} \cline{7-10}
+\textbf{0} & 1 & & & & & \textbf{0} & 1 & 1 & 1 \\
+\cline{1-2} \cline{7-10}
+\textbf{1/2} & 1/2 & & & & & \textbf{1/2} & 1/2 & 1 & 1 \\
+\cline{1-2} \cline{7-10}
+\textbf{1} & 0 & & & & & \textbf{1} & 0 & 1/2 & 1 \\
+\cline{1-2} \cline{7-10}
 \end{tabular}
 \end{center}
 
-Так же важно понимать, что $A\vee\lnot A\neq 1$ и $A\ampersand\lnot A\neq 0$. 
+\begin{center}
+\begin{tabular}{|c|c|c|c|llll|c|c|c|c|llll|c|c|c|c|}
+\cline{1-4} \cline{9-12} \cline{17-20}
+\textbf{OR} & \textbf{0} & \textbf{1/2} & \textbf{1} & & & & & \textbf{AND} & \textbf{0} & \textbf{1/2} & \textbf{1} & & & & & \textbf{EQ} & \textbf{0} & \textbf{1/2} & \textbf{1} \\
+\cline{1-4} \cline{9-12} \cline{17-20} 
+\textbf{0} & 0 & 1/2 & 1 & & & & & \textbf{0} & 0 & 0 & 0 & & & & & \textbf{0} & 1 & 1/2 & 0 \\ 
+\cline{1-4} \cline{9-12} \cline{17-20} 
+\textbf{1/2} & 1/2 & 1/2 & 1 & & & & & \textbf{1/2} & 0 & 1/2 & 1/2 & & & & & \textbf{1/2} & 1/2 & 1 & 1/2 \\ 
+\cline{1-4} \cline{9-12} \cline{17-20} 
+\textbf{1} & 1 & 1 & 1 & & & & & \textbf{1} & 0 & 1/2 & 1 & & & & & \textbf{1} & 0 & 1/2 & 0 \\ 
+\cline{1-4} \cline{9-12} \cline{17-20} 
+\end{tabular}
+\end{center}\\
 
-\newpage
+\opr
+
+Формула $\varphi$ называется \textbf{тождественно истинной}, если она приминает значение 1 при любых значениях входящих переменных.\\
+
+\predl
+
+$\varphi$ т. и. в логике Лукасевича $\Rightarrow \varphi$ т. и. в классической логике высказываний.\\
+
+\zam
+
+$\exists \varphi$ такие, что $\varphi$ т. и. в классической логике высказываний, но не в логике Лукасевича.
+
+Примерами таких формул являются $(\psi\vee\lnot\psi)$ и $\lnot(\psi\ampersand\lnot\psi)$.\\
+
+В 1938 г. Д.А. Бочваром была построена первая в мире логика бессмысленности $B_3$ в связи с проблемой разрешения логических антиномий, в первую очередь
+\textit{парадокса Рассела}. В данной системе третье истинностное значение 1/2 предлагается интерпретировать не столько как промежуточное между истиной 1 и ложью 0, сколько как парадоксальное значение или даже как «бессмысленность».\\
 
 \opr
 
@@ -4479,20 +4528,85 @@ $Stavi(P_1,P_2)=\exists s\Big(t<s\ampersand\exists u\big(t<u<s\ampersand\lnot P_
 
 1/2 - "\textit{Бессмысленно(Senselessly)}"{}.
 
-Таблицы истинности в данной логике задаются следующим образом. Здесь столбцы и колонки \underline{по другому поставлены}! Это для лучшего запоминания:
+Идея этой логики проста: если хотя бы одна пропозициональная переменная "бессмысленна"{}, то и вся формула "бессмысленна"{}.
 
 \begin{center}
-\begin{tabular}{|c|c|c|c|llll|l|l|l|l|llll|c|c|}
-\cline{1-4} \cline{9-12} \cline{17-18}
-\textbf{OR} & \textbf{T} & \textbf{S} & \textbf{F} &  &  &  &  & \textbf{AND} & \textbf{T} & \textbf{S} & \textbf{F} &  &  &  &  & \textbf{NOT} &  \\ \cline{1-4} \cline{9-12} \cline{17-18} 
-\textbf{T} & T & S & T &  &  &  &  & \textbf{T} & T & S & F &  &  &  &  & \textbf{T} & F \\ \cline{1-4} \cline{9-12} \cline{17-18} 
-\textbf{S} & S & S & S &  &  &  &  & \textbf{S} & S & S & S &  &  &  &  & \textbf{S} & S \\ \cline{1-4} \cline{9-12} \cline{17-18} 
-\textbf{F} & T & S & F &  &  &  &  & \textbf{F} & F & S & F &  &  &  &  & \textbf{F} & T \\ \cline{1-4} \cline{9-12} \cline{17-18} 
+\begin{tabular}{|c|c|llll|c|c|c|c|llll|c|c|c|c|}
+\cline{1-2} \cline{7-10} \cline{15-18}
+\textbf{NOT} & & & & & & \textbf{$\rightarrow$} & \textbf{0} & \textbf{1/2} & \textbf{1} & & & & & \textbf{EQ} & \textbf{0} & \textbf{1/2} & \textbf{1} \\
+\cline{1-2} \cline{7-10} \cline{15-18}
+\textbf{0} & 1 & & & & & \textbf{0} & 1 & 1/2 & 1 & & & & & \textbf{0} & 1 & 1/2 & 0 \\
+\cline{1-2} \cline{7-10} \cline{15-18}
+\textbf{1/2} & 1/2 & & & & & \textbf{1/2} & 1/2 & 1/2 & 1/2 & & & & & \textbf{1/2} & 1/2 & 1/2 & 1/2 \\
+\cline{1-2} \cline{7-10} \cline{15-18}
+\textbf{1} & 0 & & & & & \textbf{1} & 0 & 1/2 & 1  & & & & & \textbf{1} & 0 & 1/2 & 0 \\
+\cline{1-2} \cline{7-10} \cline{15-18}
 \end{tabular}
 \end{center}
 
-В 1938 г. Д.А. Бочваром была построена первая в мире логика бессмысленности в связи с проблемой разрешения логических антиномий, в первую очередь
-\textit{парадокса Рассела}. В данной системе третье истинностное значение 1/2 предлагается интерпретировать не столько как промежуточное между истиной 1 и ложью 0, сколько как парадоксальное значение или даже как «бессмысленность».\\
+\begin{center}
+\begin{tabular}{|c|c|c|c|llll|c|c|c|c|llll|c|c|c|c|}
+\cline{1-4} \cline{9-12}
+\textbf{OR} & \textbf{0} & \textbf{1/2} & \textbf{1} & & & & & \textbf{AND} & \textbf{0} & \textbf{1/2} & \textbf{1} \\
+\cline{1-4} \cline{9-12}
+\textbf{0} & 0 & 1/2 & 1 & & & & & \textbf{0} & 0 & 1/2 & 0 \\ 
+\cline{1-4} \cline{9-12}
+\textbf{1/2} & 1/2 & 1/2 & 1/2 & & & & & \textbf{1/2} & 1/2 & 1/2 & 1/2 \\ 
+\cline{1-4} \cline{9-12}
+\textbf{1} & 1 & 1/2 & 1 & & & & & \textbf{1} & 0 & 1/2 & 1 \\ 
+\cline{1-4} \cline{9-12}
+\end{tabular}
+\end{center}\\
+
+\predl
+
+$\varphi$ т. и. в логике Бочвара $\Rightarrow \varphi$ т. и. в классической логике высказываний.\\
+
+Как и в логике Лукасевича, здесь не выполняются законы исключения третьего и противоречия.\\
+
+Разработка теории рекурсивных функций преводит к идее не всюду определённой (частичной) функции. В 1938 году С.Клини разрабатывает трёхзначную логику $K_3$, в которой введение логических связок должно моделировать рекурсивные функции. Отсюда третье истинностное значение интерпретируется как "не определено"{}, "неизвестно"{}, "неразрешимо"{}.\\
+
+\opr
+
+\textbf{Логика Клини} задаётся истинностями: 
+
+1 - "\textit{Истина}"{}, 
+
+0 - "\textit{Ложь}"{}, 
+
+1/2 - "\textit{Не определено(Undefined)}"{}.
+
+Таблицы истинности в данной логике задаются следующим образом:
+
+\begin{center}
+\begin{tabular}{|c|c|llll|c|c|c|c|}
+\cline{1-2} \cline{7-10}
+\textbf{NOT} & & & & & & \textbf{$\rightarrow$} & \textbf{0} & \textbf{1/2} & \textbf{1} \\
+\cline{1-2} \cline{7-10}
+\textbf{0} & 1 & & & & & \textbf{0} & 1 & 1 & 1 \\
+\cline{1-2} \cline{7-10}
+\textbf{1/2} & 1/2 & & & & & \textbf{1/2} & 1/2 & 1/2 & 1 \\
+\cline{1-2} \cline{7-10}
+\textbf{1} & 0 & & & & & \textbf{1} & 0 & 1/2 & 1 \\
+\cline{1-2} \cline{7-10}
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|llll|c|c|c|c|llll|c|c|c|c|}
+\cline{1-4} \cline{9-12} \cline{17-20}
+\textbf{OR} & \textbf{0} & \textbf{1/2} & \textbf{1} & & & & & \textbf{AND} & \textbf{0} & \textbf{1/2} & \textbf{1} & & & & & \textbf{EQ} & \textbf{0} & \textbf{1/2} & \textbf{1} \\
+\cline{1-4} \cline{9-12} \cline{17-20} 
+\textbf{0} & 0 & 1/2 & 1 & & & & & \textbf{0} & 0 & 0 & 0 & & & & & \textbf{0} & 1 & 1/2 & 0 \\ 
+\cline{1-4} \cline{9-12} \cline{17-20} 
+\textbf{1/2} & 1/2 & 1/2 & 1 & & & & & \textbf{1/2} & 0 & 1/2 & 1/2 & & & & & \textbf{1/2} & 1/2 & 1 & 1/2 \\ 
+\cline{1-4} \cline{9-12} \cline{17-20} 
+\textbf{1} & 1 & 1 & 1 & & & & & \textbf{1} & 0 & 1/2 & 1 & & & & & \textbf{1} & 0 & 1/2 & 0 \\ 
+\cline{1-4} \cline{9-12} \cline{17-20} 
+\end{tabular}
+\end{center}\\
+
+Обратите внимание, что здесь $(1/2\rightarrow 1/2)=1/2$, а не 1, как в логике $L_3$, это их единственное различие.\newpage
 
 \msubsection{Нечёткая логика}
 
@@ -4519,7 +4633,7 @@ $Stavi(P_1,P_2)=\exists s\Big(t<s\ampersand\exists u\big(t<u<s\ampersand\lnot P_
 
 Так, чай с температурой $60^{\circ}C$ принадлежит к множеству "\textit{Горячий}"{} со степенью принадлежности 0.8. Для одного человека чай при температуре $60^{\circ}C$ может оказаться горячим, для другого – не слишком горячим. Именно в этом и проявляется нечеткость задания соответствующего множества.
 
-Для нечетких множеств, как и для обычных, определены основные логические операции. Существуют различные виды нечётких логик.\\
+Для нечетких множеств, как и для обычных, определены основные логические операции. Существуют различные виды нечётких логик.
 
 \oprT{Операции над нечёткими множествами}
 
@@ -4529,7 +4643,7 @@ $\chf_{A\cup B}(x)=max\{\chf_A(x),\chf_B(x)\}$,
 
 $\chf_{A\cap B}(x)=min\{\chf_A(x),\chf_B(x)\}$,
 
-$\chf_{\lnot A}(x)=1-\chf_A(x)$.\newpage
+$\chf_{\lnot A}(x)=1-\chf_A(x)$.
 
 \primer
 
@@ -4559,7 +4673,7 @@ $\chf_{\lnot A}(x)=1-\chf_A(x)$.\\
 
 $\chf_{A\cup B}(x)=\begin{cases}\chf_A(x),&\chf_B(x)=0\\\chf_B(x),&\chf_A(x)=0\\1, & \text{иначе}\end{cases}$\leavevmode\\\\
 
-$\chf_{A\cap B}(x)=\begin{cases}\chf_A(x),&\chf_B(x)=1\\\chf_B(x),&\chf_A(x)=1\\0, & \text{иначе}\end{cases}$\newpage
+$\chf_{A\cap B}(x)=\begin{cases}\chf_A(x),&\chf_B(x)=1\\\chf_B(x),&\chf_A(x)=1\\0, & \text{иначе}\end{cases}$\\
 
 \opr
 
@@ -4585,7 +4699,7 @@ $\chf_{A\cap B}(x)=\begin{cases}\chf_A(x),&\chf_B(x)=1\\\chf_B(x),&\chf_A(x)=1\\
 
 4) $x_1\leqslant x_2\Rightarrow g(x_1,y)\leqslant g(x_2,y)$.\\
 
-В настоящее время в нечеткой логике в качестве операций конъюнкции и дизъюнкции широко используются $t$-нормы и $t$-конормы соответственно, пришедшие в нечёткую логику из теории вероятностных метрических пространств. Эти операции достаточно хорошо изучены и лежат в основе многих формальных построений нечеткой логики.\\
+В настоящее время в нечеткой логике в качестве операций конъюнкции и дизъюнкции широко используются $t$-нормы и $t$-конормы соответственно, пришедшие в нечёткую логику из теории вероятностных метрических пространств. Эти операции достаточно хорошо изучены и лежат в основе многих формальных построений нечеткой логики и являются так называемыми \textbf{триангулярными формами}.\\
 
 \opr 
 
@@ -4631,7 +4745,7 @@ $N(g(x,y))=f(N(x),N(y))$.\\
 
 2) $\forall g$ - $t$-конорм $g(x,y)\leqslant g_d(x,y)$, где $g_d(x,y)$ - драстическая $t$-конорма.
 
-Драстические $t$-конормы и $t$-нормы описаны в 48.1. соответственно.
+Драстические $t$-конормы и $t$-нормы описаны в 49.1. соответственно.\newpage
 
 \dok
 
@@ -4645,7 +4759,7 @@ $N(g(x,y))=f(N(x),N(y))$.\\
 
 Для $t$-конорм аналогично.
 
-Предложение доказано.
+Предложение доказано.\\
 
 \predl
 
@@ -4661,18 +4775,759 @@ $N(g(x,y))=f(N(x),N(y))$.\\
 
 Идемпотентность соблюдается так же \underline{только у $t$-конорм Заде}.\\
 
+\opr
+
+Определим \textbf{лингвистическую переменную} набором $(X, T(X), U, G, M)$, где
+
+$X$ - название переменной;
+
+$T(X)$ - терм-множество переменной $X$ (лингвистические значения);
+
+$U$ - универсальное множество с базовой переменной $u$;
+
+$G$ - синтаксическое правило, порождающее названия значений $X$;
+
+$M$ - семантическое правило, ставящее в соотвестствие каждой нечёткой переменной $x\in X$ её смысл $M(x)$.
+
+\primer
+
+Пусть
+
+$X=$ "температура в комнате"{};
+
+$T=$ \{холодно, комфортно, жарко\};
+
+$U=[5;\;35]$;
+
+$M=\{\mu_c(u),\;\mu_n(u), \mu_h(u)\}$, где
+
+$\mu_c(u)=\frac{1}{1+(\frac{u-10}{7})^{12}},\;\;\;\mu_n(u)=\frac{1}{1+(\frac{u-20}{3})^{6}},\;\;\;\mu_h(u)=\frac{1}{1+(\frac{u-30}{6})^{10}}$;
+
+$G$ порождает новые термы с использованием союзов "и"{}, "или"{}, "не"{}, "очень"{}, "более-менее"{}:
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\cline{1-2}
+\textbf{Терм} & \textbf{Вероятность} \\
+\cline{1-2}
+$\textbf{не }A$ & $1-\mu_A(u)$ \\
+\cline{1-2}
+$\textbf{очень }A$ & $(\mu_A(u))^2$ \\
+\cline{1-2}
+$\textbf{более-менее }A$ & $\sqrt{\mu_A(u)}$ \\
+\cline{1-2}
+$A\textbf{ или }B$ & $max(\mu_A(u),\;\mu_B(u))$ \\
+\cline{1-2}
+$A\textbf{ и }B$ & $min(\mu_A(u),\;\mu_B(u))$ \\
+\cline{1-2}
+\end{tabular}
+\end{center}\newpage
+
+Покажем на плоскости графики некоторых функций:
+
+\begin{center}
+\begin{tikzpicture} [
+    declare function={
+        poss(\x,\y,\z,\t) = 1 / (1 + ((\x - \y) / \z)^\t);
+    },
+    declare function={
+        cold(\x) = poss(\x, 10, 6, 12);
+    },
+    declare function={
+        comfortable(\x) = poss(\x, 20, 3, 6);
+    },
+    declare function={
+        hot(\x) = poss(\x, 30, 7, 10);
+    }
+]
+\begin{axis}[
+    title=Температура в комнате,
+    width = 12 cm,
+	xlabel = {$t,^{\circ}C$},
+	ylabel = {$\mu$},
+    ylabel style={rotate=-90, at={(0,.91)}},
+    domain = 10:30,
+	minor tick num = 1,
+    legend pos = outer north east
+]
+\addlegendimage{empty legend}
+\addplot[color=blue, line width=.08cm]{cold(x)};
+\addplot[color=green, line width=.08cm]{comfortable(x)};
+\addplot[color=red, line width=.08cm]{hot(x)};
+\addplot[color=blue, line width=.05cm, densely dotted]{1-(cold(x))^2};
+\addplot[color=green, line width=.05cm, densely dotted]{sqrt(comfortable(x))};
+\addplot[color=red, line width=.05cm, densely dotted]{hot(x)^2};
+
+\addlegendentry{\hspace{-.4cm}\textbf{Ощущения}}
+\addlegendentry{холодно}
+\addlegendentry{комфортно}
+\addlegendentry{жарко}
+\addlegendentry{не очень холодно}
+\addlegendentry{более-менее комфортно}
+\addlegendentry{очень жарко}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
 К нечётной логике сначала научное сообщество отнеслось скептически, поскольку нечётная логика противоречила логике самого Аристотеля, которой люди руководствовались на протяжении многих веков. Мотивацией создания подобной логики стал "\textit{принцип несовместимости}"{} Заде, который гласил "\textit{чем сложнее система, тем сложнее дать точные и в то же время имеющие практическое значение суждения об её поведении}"{}. Т.е. потребовался инструмент, что не нуждался в абсолютной строгости ответа и с помощью которого можно было бы обрабатывать неточные данные.
 
 Нечёткая логика эту возможность и дала. Но не смотря на то, что она была придумана в 1965 году, полное признание она получила лишь 20 лет спустя после доказательства Бартоломеем Коско знаменитой теоремы FAT(Fuzzy Approximation Theorem). В бизнесе и финансах нечеткая логика получила признание после того, как в 1988 году экспертная система на основе нечетких правил для прогнозирования финансовых индикаторов единственная предсказала биржевой крах. И количество успешных нечётких-применений в настоящее время исчисляется тысячами.
 
-На данный момент широкое применение нечёткая логика имеет в нейронных сетях, базах данных, \textit{мягких вычислениях}, гибридных интеллектуальных системах и т.д..
+На данный момент широкое применение нечёткая логика имеет в нейронных сетях, базах данных, \textit{мягких вычислениях}, гибридных интеллектуальных системах и т.д..\\
 
-Но несмотря на такие огромные прорывы благодаря нечёткой логике, она так же имеет весомые недостатки и свои парадоксы. И она по сей день имеет противников. Но тем не менее, благодаря достижениям нечёткой логики в обработке поисковых запросов, я смог Вам склепать столь прекрасное творение под названием "\textit{методичка по ЛОПу}"{} :) \\\\
+Но несмотря на такие огромные прорывы благодаря нечёткой логике, она так же имеет весомые недостатки и свои парадоксы. И она по сей день имеет противников.\\
+
+\msection{Анализ формальных понятий}
+
+Анализ формальных понятий появался относительно недавно, в 80-х годах прошлого века, под влиянием работ Рудольфа Вилле.
+
+Каждый объект обладает какими-либо свойствами. Например, треугольник - имеет 3 стороны, сумма углов 180$^{\circ}$; квадрат - имеет 4 стороны, все углы прямые, все стороны равны и т. д. Мы можем объединять объекты по схожим свойствам в группы, например, те же квадрат и треугольник можно объединить в группу многоугольников, а куб и сферу - в группу геометрических тел. Это и лежит в основе АФП.\newpage
+
+\msubsection{Формальные контекст и понятия}
+
+\opr
+
+\textbf{Формальным контекстом} называется кортеж $\mathbb{K}=(G,M,I)$, где
+
+$G$ - множество \textbf{объектов} контекста $\mathbb{K}$,
+
+$M$ - множество \textbf{атрибутов} или \textbf{свойств} контекста $\mathbb{K}$,
+
+$I\subseteq G\times M$ - отношение между множествами.\\
+
+\primer
+
+\begin{tabular}{|c|c|cccc|llll}
+\cline{1-6}
+&G\backslash M & a & b & c & d & & & & \\
+\cline{1-6}
+    1&\begin{tikzpicture}
+    \draw[color=black, very thick](0, 0) -- (.5, 0);
+    \draw[color=black, very thick](0, 0) -- (.25, .43);
+    \draw[color=black, very thick](.25, .43) -- (.5, 0);
+    \end{tikzpicture}
+& \times & & & \times & & & & a - ровно 3 стороны, \\
+    2&\begin{tikzpicture}
+    \draw[color=black, very thick](0, 0) -- (0, .5);
+    \draw[color=black, very thick](0, 0) -- (.5, 0);
+    \draw[color=black, very thick](.5, 0) -- (0, .5);
+    \end{tikzpicture}
+& \times & & \times & & & & & b - ровно 4 стороны, \\
+    3&\begin{tikzpicture}
+    \draw[color=black, very thick](0, 0) -- (0, .5);
+    \draw[color=black, very thick](0, 0) -- (1, 0);
+    \draw[color=black, very thick](1, .5) -- (0, .5);
+    \draw[color=black, very thick](1, .5) -- (1, 0);
+    \end{tikzpicture}
+& & \times & \times & & & & & c - имеет прямой угол, \\
+    4&\begin{tikzpicture}
+    \draw[color=black, very thick](0, 0) -- (0, .5);
+    \draw[color=black, very thick](0, 0) -- (.5, 0);
+    \draw[color=black, very thick](.5, .5) -- (0, .5);
+    \draw[color=black, very thick](.5, .5) -- (.5, 0);
+    \end{tikzpicture}
+& & \times & \times & \times & & & & d -  все стороны равны. \\
+\cline{1-6}
+\end{tabular}\\
+
+Можно догадаться, что всякую таблицу, в которой для каждого объекта определено наличие или отсутствие каждого свойства, можно преобразовать в формальный контекст. Если в таблице на пересечении строк и столбцов
+вместо "да"{} и "нет"{} стоит более контретная характеристика, например, население страны, то такую таблицу тоже можно преобразовать в формальный контекст, только он будет многозначным. О многозначных контекстах мы поговорим
+в следующем параграфе.\\
+
+\opr
+
+Для множеств $A\subseteq G\text{ и } B\subseteq M$ формального контекста $\mathbb{K}=(G,M,I)$ определим \textbf{операторы Галуа} следующим образом:
+
+1) $A\galoisup=\{m\in M\;|\;\forall g\in A:gIm\}$, или множество всех свойств, которыми обладают все объекты из $A$;
+
+2) $B\galoisdown=\{g\in G\;|\;\forall m\in B:gIm\}$, или множество всех объектов, которые обладают всеми свойствами из $B$.
+
+\primer
+
+Пусть формальный контекст задан следующим образом:
+
+\begin{center}
+\begin{tabular}{|c|cccc|}
+\cline{1-5}
+\textbf{$I$} & \textbf{$y_1$} & \textbf{$y_2$} & \textbf{$y_3$} & \textbf{$y_4$} \\
+\cline{1-5}
+\textbf{$x_1$} & \times & \times & $\times$ & $\times$ \\
+\textbf{$x_2$} & \times & & $\times$ & $\times$ \\
+\textbf{$x_3$} & & \times & $\times$ & $\times$ \\
+\textbf{$x_4$} & & \times & $\times$ & $\times$ \\
+\textbf{$x_5$} & \times & & & \\
+\cline{1-5}
+\end{tabular}
+\end{center}
+
+Операторы Галуа работают следующим образом:
+
+1) $\{x_2\}\galoisup=\{y_1,\;y_3,\;y_4\},\;\{x_2,\;x_3\}\galoisup=\{y_3,\;y_4\}$;
+
+2) $\{x_1,\;x_4,\;x_5\}\galoisup=\varnothing$;
+
+3) $X\galoisup=\varnothing,\;\varnothing\galoisup=Y$;
+
+4) $\{y_1\}\galoisdown=\{x_1,\;x_2,\;x_5\},\;\{y_1,\;y_2\}\galoisdown=\{x_1\}$;
+
+5) $Y\galoisdown=\{x_1\},\;\varnothing\galoisdown=X$.\\
+
+В литературе оба оператора Галуа иногда обозначаются штрихом $'$, но мы здесь будем пользоваться стрелочками.\\
+
+Как это состыкуется с аксиоматизируемыми классами? Если мы каждое свойство мы будем понимать как атомарную формулу, которые образуют сигнатуру $\sg=\{P_i(a_1, ..., a_{n_i})\}$, а объекты - как модели
+$\mA_i\in K(\sg)$ такие, что $\mA_i\vD P_j(a_1, ..., a_{n_j})\Leftrightarrow g_iIm_j$, то можно легко перейти от АФП к аксиоматизируемым классам и наоборот. Теперь мы смогли ответить на вопрос, зачем существует 22 глава:)\\
+
+\opr
+
+Пара множеств $(A,B)$ называется \textbf{формальным понятием} формального контекста $\mathbb{K}=(G,M,I)$, если:
+
+1) $A\subseteq G\text,\;B\subseteq M$;
+
+2) $A\galoisup=B,\;B\galoisdown=A$.
+
+Множество $A$ называется \textbf{объёмом} ф.п. $(A,B)$, множество $B$ - его \textbf{содержанием}.
+
+\primer
+
+Пусть формальный контекст $\mathbb{K}$ задан так же, как и в предыдущем примере:
+
+\begin{center}
+\begin{tabular}{|c|cccc|}
+\cline{1-5}
+\textbf{$I$} & \textbf{$y_1$} & \textbf{$y_2$} & \textbf{$y_3$} & \textbf{$y_4$} \\
+\cline{1-5}
+\textbf{$x_1$} & \times & \times & \textcolor{blue}{$\times$} & \textcolor{blue}{$\times$} \\
+\textbf{$x_2$} & \times & & \textcolor{blue}{$\times$} & \textcolor{blue}{$\times$} \\
+\textbf{$x_3$} & & \times & \textcolor{blue}{$\times$} & \textcolor{blue}{$\times$} \\
+\textbf{$x_4$} & & \times & \textcolor{blue}{$\times$} & \textcolor{blue}{$\times$} \\
+\textbf{$x_5$} & \times & & & \\
+\cline{1-5}
+\end{tabular}
+\end{center}
+
+Синим цветом выделено формальное понятие $(A,B)=(\{x_1,x_2,x_3,x_4\},\newline\;\{y_3,y_4\}):\{x_1,x_2,x_3,x_4\}\galoisup=\{y_3,y_4\}\text{ и }\{y_3,y_4\}\galoisdown=\{x_1,x_2,x_3,x_4\}$.
+
+Тут можно выделить и другие формальные понятия, например, $\newline(\{x_1,x_3,x_4\},\{y_2,y_3,y_4\})\text{ и }(\{x_1,x_2\},\{y_1,y_3,y_4\})$.\\
+
+\predlT{Свойства операторов Галуа}
+
+Пусть $\mathbb{K}=(G,\;M,\;I)$. Тогда $\forall A,A_1,A_2\in G,\;\forall B,B_1,B_2\in M$ выполняются следующие свойства:
+
+1) $A_1\subseteq A_2\Rightarrow A_2\galoisup\subseteq A_1\galoisup$;
+
+2) $A\subseteq A\galoisup\galoisdown$ - замыкание;
+
+3) $A\galoisup=A\galoisup\galoisdown\galoisup$;
+
+4) $B_1\subseteq B_2\Rightarrow B_2\galoisdown\subseteq B_1\galoisdown$;
+
+5) $B\subseteq B\galoisdown\galoisup$ - замыкание;
+
+6) $B\galoisdown=B\galoisdown\galoisup\galoisdown$;
+
+7) $A\subseteq B\galoisdown\Leftrightarrow B\subseteq A\galoisup\Leftrightarrow A\times B\subseteq I$.
+
+\dok
+
+1) $m\in A_2\galoisup\Rightarrow\forall g\in A_2:gIm\Rightarrow\forall g\in A_1:gIm\Rightarrow m\in A_1\galoisup$.
+
+2) $g\in A\Rightarrow\forall m\in A\galoisup:gIm\Rightarrow g\in A\galoisup\galoisdown$.\\
+
+3) $\left.
+  \begin{array}{c}
+    A\galoisup\subseteq (A\galoisup)\galoisdown\galoisup\text{ из пункта 5} \\
+    A\subseteq A\galoisup\galoisdown\Rightarrow (A\galoisup\galoisdown)\galoisup\subseteq A\galoisup
+  \end{array}
+  \right\}\Rightarrow A\galoisup=A\galoisup\galoisdown\galoisup$.\\
+
+4)-6) аналогично 1)-3).
+
+7) Сначала покажем, что $A\subseteq B\galoisdown\Leftrightarrow B\subseteq A\galoisup$:
+
+$\rightdok$ $m\in B\Rightarrow\forall g\in B\galoisdown:gIm\Rightarrow\forall g\in A:gIm\Rightarrow m\in A\galoisup$.
+
+$\leftdok$ Аналогично.\\
+
+Далее покажем, что $A\subseteq B\galoisdown\Leftrightarrow A\times B\subseteq I$:
+
+$\rightdok$ $(g,m)\in A\times B\Rightarrow g\in A\Rightarrow g\in B\galoisdown\Rightarrow\forall m'\in B:gIm'\Rightarrow gIm$.
+
+$\leftdok$ $g\in A\Rightarrow\forall m\in B: gIm\Rightarrow g\in B\galoisdown$.
+
+Предложение доказано.\\
+
+\predl
+
+Пусть $\mathbb{K}=(G,M,I),\;A\subseteq G,\;B\subseteq M$, тогда эти утверждения эквивалентны:
+
+1) $(A,B)$ - формальное понятие;
+
+2) $(A,B)=(B\galoisdown,B\galoisdown\galoisup)$;
+
+3) $(A,B)=(A\galoisup\galoisdown,A\galoisup)$.\newpage
+
+\dok
+
+Покажем $(1)\Leftrightarrow (2)$:
+
+$\rightdok$ Пусть $(A,B)$ - формальное понятие, тогда $(A,B)=(B\galoisdown,A\galoisup)=\newline=(B\galoisdown,B\galoisdown\galoisup)$.
+
+$\leftdok$ Пусть $(A,B)=(B\galoisdown,B\galoisdown\galoisup)$, тогда $A=B\galoisdown$ и $B=(B\galoisdown)\galoisup=A\galoisup$.
+
+Для пары $(1)\Leftrightarrow (3)$ доказательство аналогичное.
+
+Предложение доказано.\\
+
+\predl
+
+Пусть $\mathbb{K}=(G,M,I),\;\ki$ - некоторое множество индексов и $\forall i\in\ki:\newline A_i\subseteq G,\;B_i\subseteq M$. Тогда:
+
+1) $\bigs(\underset{i\in\ki}{\bigs\bigcup}A_i\bigs)\galoisup=\underset{i\in\ki}{\bigs\bigcap}A_i\galoisup$,\\
+
+2) $\bigs(\underset{i\in\ki}{\bigs\bigcup}B_i\bigs)\galoisdown=\underset{i\in\ki}{\bigs\bigcap}B_i\galoisdown$.
+
+\dok
+
+1) $m\in\bigs(\underset{i\in\ki}{\bigs\bigcup}A_i\bigs)\galoisup\Leftrightarrow\forall g\in\underset{i\in\ki}{\bigs\bigcup}A_i\bigs:\;gIm\Leftrightarrow\forall i\in\ki:\forall g\in A_i:gIm\Leftrightarrow\newline\newline
+\Leftrightarrow\forall i\in\ki:m\in A_i\Leftrightarrow m\in\underset{i\in\ki}{\bigs\bigcap}A_i\galoisup$.
+
+2) Аналогично 1-му пункту.
+
+Предложение доказано.\\
+
+Теперь мы можем построить решётку формальных понятий. Напомним, что решётка - это частично упорядоченное множество, каждое двухэлементное подмножество которого имеет инфинум и супремум.\newpage
+
+\opr
+
+Пусть $(A_1,B_1),\;(A_2,B_2)$ - формальные понятия формального контекста $\mathbb{K}=(G,M,I)$. Понятие $(A_1,B_1)$ называется \textbf{подпонятием} понятия $(A_2,B_2)$, если $A_1\subseteq A_2$ (или $B_2\subseteq B_1$), и
+обозначается $(A_1,B_1)\le(A_2,B_2)$.
+
+\primer
+
+Вспомним пример с геометрическими фигурами:
+
+\begin{tabular}{|c|c|cccc|llll}
+\cline{1-6}
+&G\backslash M & a & b & c & d & & & & \\
+\cline{1-6}
+    1&\begin{tikzpicture}
+    \draw[color=black, very thick](0, 0) -- (.5, 0);
+    \draw[color=black, very thick](0, 0) -- (.25, .43);
+    \draw[color=black, very thick](.25, .43) -- (.5, 0);
+    \end{tikzpicture}
+& \times & & & \times & & & & a - ровно 3 стороны, \\
+    2&\begin{tikzpicture}
+    \draw[color=black, very thick](0, 0) -- (0, .5);
+    \draw[color=black, very thick](0, 0) -- (.5, 0);
+    \draw[color=black, very thick](.5, 0) -- (0, .5);
+    \end{tikzpicture}
+& \times & & \times & & & & & b - ровно 4 стороны, \\
+    3&\begin{tikzpicture}
+    \draw[color=black, very thick](0, 0) -- (0, .5);
+    \draw[color=black, very thick](0, 0) -- (1, 0);
+    \draw[color=black, very thick](1, .5) -- (0, .5);
+    \draw[color=black, very thick](1, .5) -- (1, 0);
+    \end{tikzpicture}
+& & \times & \times & & & & & c - имеет прямой угол, \\
+    4&\begin{tikzpicture}
+    \draw[color=black, very thick](0, 0) -- (0, .5);
+    \draw[color=black, very thick](0, 0) -- (.5, 0);
+    \draw[color=black, very thick](.5, .5) -- (0, .5);
+    \draw[color=black, very thick](.5, .5) -- (.5, 0);
+    \end{tikzpicture}
+& & \times & \times & \times & & & & d - все стороны равны. \\
+\cline{1-6}
+\end{tabular}\\
+
+Построим решётку понятий этого контекста:
+
+\begin{wrapfigure}[8]{l}{0.4\textwidth}
+\begin{tikzpicture}
+\draw[color=black, very thick](0,0) -- (0,4);
+\draw[color=black, very thick](2,1) -- (2,5);
+\draw[color=black, very thick](6,1) -- (6,3);
+\draw[color=black, very thick](6,3) -- (6,5);
+\draw[color=black, very thick](4,0) -- (4,4);
+\draw[color=black, very thick](0,0) -- (4,0);
+\draw[color=black, very thick](0,4) -- (4,4);
+\draw[color=black, very thick](2,1) -- (6,1);
+\draw[color=black, very thick](2,5) -- (6,5);
+\draw[color=black, very thick](0,0) -- (2,1);
+\draw[color=black, very thick](0,4) -- (2,5);
+\draw[color=black, very thick](4,4) -- (6,5);
+\draw[color=black, very thick](4,0) -- (6,3);
+
+\draw[fill=black, color=black, very thick](0,0) circle (.05);
+\draw[fill=black, color=black, very thick](4,0) circle (.05);
+\draw[fill=black, color=black, very thick](6,1) circle (.05);
+\draw[fill=black, color=black, very thick](2,1) circle (.05);
+\draw[fill=black, color=black, very thick](6,3) circle (.05);
+\draw[fill=black, color=black, very thick](0,4) circle (.05);
+\draw[fill=black, color=black, very thick](4,4) circle (.05);
+\draw[fill=black, color=black, very thick](6,5) circle (.05);
+\draw[fill=black, color=black, very thick](2,5) circle (.05);
+
+\node[scale=1.1] at (0,-.6) {$A$};
+\node[scale=1.1] at (4,-.6) {$B$};
+\node[scale=1.1] at (6,.4) {$C$};
+\node[scale=1.1] at (2,.4) {$D$};
+\node[scale=1.1] at (0.1,4.6) {$A_1$};
+\node[scale=1.1] at (4.1,4.6) {$B_1$};
+\node[scale=1.1] at (6.1,5.5) {$C_1$};
+\node[scale=1.1] at (2.1,5.5) {$D_1$};
+\node[scale=1.1] at (6.5,3) {$C_2$};
+\end{tikzpicture}
+\end{wrapfigure}
+
+$A: (\varnothing, M)$ - пусто;
+
+$B: (\{2\}, \{a,c\})$ - прямоугольные треугольники;
+
+$C: (\{3,4\}, \{b,c\})$ - прямоугольные четырёхугольники;
+
+$D: (\{4\}, \{b,c,d\})$ - квадраты;
+
+$A_1: (\{1\}, \{a,d\})$ - равносторонние треугольники;
+
+$B_1: (\{1,2\}, \{a\})$ - треугольники;
+
+$C_1: (G,\varnothing)$ - многоугольники;
+
+$D_1: (\{1,4\}, \{d\})$ - равносторонние фигуры;
+
+$C_2: (\{2,3,4\}, \{c\})$ - прямоугольные фигуры.
+
+Необходимо отметить, что не все комбинации фигур образуют понятия, например, из множества $\{1,2,3\}$ в силу предложения 50.5 не получится формальное понятие, так как $\{1,2,3\}\galoisup\galoisdown\neq\{1,2,3\}$.
+
+\teorT{основная теорема о формальных понятиях}
+
+Множество $\mB(G,M,I)$ всех формальных понятий формального контекста $\mathbb{K}=(G,M,I)$ с отношением $\le$ образует решётку ${\underline{\mB}}(G,M,I):=(\mB(G,M,I),\newline\wedge,\vee)$, в которой инфинум и супремум
+задаются следующим образом:
+
+1) $\underset{i\in\ki}{\bigs\bigwedge}(A_i,B_i)=\bigs{\bigs(}\underset{i\in\ki}{\bigs\bigcap}A_i, \bigs(\underset{i\in\ki}{\bigs\bigcup}B_i\bigs){\galoisdown\galoisup}\bigs{\bigs)}$;\\
+
+2) $\underset{i\in\ki}{\bigs\bigvee}(A_i,B_i)=\bigs{\bigs(}\bigs(\underset{i\in\ki}{\bigs\bigcup}A_i\bigs){\galoisup\galoisdown}, \underset{i\in\ki}{\bigs\bigcap}B_i\bigs{\bigs)}$.
+
+\dok
+
+1) $\forall i\in\ki:(A_i,B_i)$ - формальное понятие. Тогда\\
+
+$\bigs{\bigs(}\underset{i\in\ki}{\bigs\bigcap}A_i, \bigs(\underset{i\in\ki}{\bigs\bigcup}B_i\bigs){\galoisdown\galoisup}\bigs{\bigs)}=
+\bigs{\bigs(}\underset{i\in\ki}{\bigs\bigcap}B_i\galoisdown, \bigs(\underset{i\in\ki}{\bigs\bigcup}B_i\bigs){\galoisdown\galoisup}\bigs{\bigs)}=
+\bigs{\bigs(}\underset{i\in\ki}{\bigs(\bigs\bigcup}B_i\bigs)\galoisdown, \bigs(\underset{i\in\ki}{\bigs\bigcup}B_i\bigs){\galoisdown\galoisup}\bigs{\bigs)}$.
+
+По предложению 50.5 это формальное понятие.
+
+Покажем, что это точная нижняя грань: $\forall j\in\ki:\underset{i\in\ki}{\bigs\bigcap}A_i\subseteq A_j\Leftrightarrow\newline\Leftrightarrow
+\bigs{\bigs(}\underset{i\in\ki}{\bigs\bigcap}A_i, \bigs(\underset{i\in\ki}{\bigs\bigcup}B_i\bigs){\galoisdown\galoisup}\bigs{\bigs)}\le(A_j,B_j)$.
+
+2) Аналогично.
+
+Теорема доказана.
+
+\msubsection{Многозначные контексты}
+
+Когда мы строили "однозначные"{} формальные контексты, мы говорили, обладает ли объект данным свойством или нет. Но свойства могут быть разными, начиная цветом яблока и заканчивая составом коктейля. Для таких случаев и
+были введены многозначные контексты.\newpage
+
+\opr
+
+Кортеж $\mathbb{M}=(G,M,W,I)$ называется \textbf{многозначным формальным контекстом}, где:
+
+$G$ - множество \textbf{объектов},
+
+$M$ - множество \textbf{многозначных атрибутов},
+
+$W$ - множество \textbf{значения атрибутов} $\mathbb{M}$,
+
+$I\subseteq G\times M\times W$ - отношение такое, что $(g,m,w)\in I\text{ и }(g,m,v)\in I\Rightarrow\newline\Rightarrow w=v$.
+
+\primer
+
+Пусть многозначный формальный контекст $\mathbb{M}=(G,M,W,I)$ задан следующим образом:
+
+$G=\{$Меркурий, Венера, Земля, Марс$\}$ - планеты земной группы;
+
+$M=\{$Масса в Землях, Средний радиус планеты в Землях, Период обращения в земных сутках, Число спутников$\}$;
+
+$W=\{$"Всякие данные планет"$\}$;
+
+Отношение $I$ проще задать таблицей:
+
+\begin{center}
+\scalebox{.8}
+{
+\begin{tabular}{|c|c|c|c|c|}
+\cline{1-5}
+\textbf{Планеты} & \textbf{Масса в} & \textbf{Средний радиус} & \textbf{Период обращения} & \textbf{Число} \\
+& \textbf{Землях} & \textbf{планеты в Землях} & \textbf{в земных сутках} & \textbf{спутников} \\
+\cline{1-5}
+Меркурий & 0,055 & 0,38 & 87,97 & 0 \\
+\cline{1-5}
+Венера & 0,82 & 0,95 & 224,7 & 0 \\
+\cline{1-5}
+Земля & 1 & 1 & 365,26 & 1 \\
+\cline{1-5}
+Марс & 0,11 & 0,53 & 687 & 2 \\
+\cline{1-5}
+\end{tabular}
+}
+\end{center}
+
+\opr
+
+Пусть $\mathbb{M}=(G,M,W,I)$, тогда \textbf{область определения} атрибута $m\in M$ - множество
+
+$dom(m)=\{g\in G\;|\;\exists w\in W:(g,m,w)\in I\}$.\newpage
+
+\opr
+
+Пусть $\mathbb{M}=(G,M,W,I)$.
+
+1) $m\in M$ - \textbf{полный атрибут}, если $dom(m)=G$.
+
+2) $\mathbb{M}$ - \textbf{полный контекст}, если все его атрибуты полные.\\
+
+Пример выше является полным контекстом, так как нет планет, у которых нет, например, массы или среднего радиуса.\\
+
+\opr
+
+Пусть $\mathbb{M}=(G,M,W,I)$. \textbf{Шкалой} многозначного атрибута $m$ называется формальный контекст $\mathbb{S}_m=(W_m,W_m,I_m)$, где $W_m=\{w\in W\;|\;\exists g\in G:\newline(g,m,w)\in I\}$.\\
+
+\opr
+
+Определим следующие шкалы:
+
+1) $\mathbb{N}_n=(n,n,=)$ - \textbf{номинальная шкала};
+
+2) $\mathbb{O}_n=(n,n,\le)$ - \textbf{порядковая шкала};
+
+3) $M_{n,m}=(n,n,\le)\uplus(m,m,\ge)$ - \textbf{бипорядковая шкала}.\\
+
+\primerT{номинальной шкалы}
+
+Пусть $G$ - это множество соков, $n=\{$яблочный, виноградный, персиковый$\}$. Тогда шкала $\mathbb{N}_n=(n,n,=)$ будет выглядеть так:
+
+\begin{center}
+\scalebox{.8}
+{
+\begin{tabular}{|c|c|c|c|}
+\cline{1-4}
+& \textbf{яблочный} & \textbf{виноградный} & \textbf{персиковый} \\
+\cline{1-4}
+\textbf{яблочный} & \times & & \\
+\cline{1-4}
+\textbf{виноградный} & & \times & \\
+\cline{1-4}
+\textbf{персиковый} & & & \times \\
+\cline{1-4}
+\end{tabular}
+}
+\end{center}\newpage
+
+Решётка данной шкалы:
+
+\begin{center}
+\begin{tikzpicture}
+\draw[color=black, very thick](0,0) -- (2,-1);
+\draw[color=black, very thick](0,0) -- (2,0);
+\draw[color=black, very thick](0,0) -- (2,1);
+\draw[color=black, very thick](4,0) -- (2,-1);
+\draw[color=black, very thick](4,0) -- (2,0);
+\draw[color=black, very thick](4,0) -- (2,1);
+
+\draw[fill=black, color=black, very thick](0,0) circle (.05);
+\draw[fill=black, color=black, very thick](2,-1) circle (.05);
+\draw[fill=black, color=black, very thick](2,0) circle (.05);
+\draw[fill=black, color=black, very thick](2,1) circle (.05);
+\draw[fill=black, color=black, very thick](4,0) circle (.05);
+
+\node[scale=1.1] at (0,-.6) {$\varnothing$};
+\node[scale=1.1] at (2,-1.5) {Я};
+\node[scale=1.1] at (2,-.5) {В};
+\node[scale=1.1] at (2,.5) {П};
+\node[scale=1.1] at (4,-.6) {$M$};
+\end{tikzpicture}
+\end{center}
+
+\primerT{порядковой шкалы}
+
+Пусть $G$ - это множество студентов, $n=\{$чрезвычайно глупый, очень глупый, глупый$\}$. Тогда шкала $\mathbb{O}_n=(n,n,\le)$ будет выглядеть так:
+
+\begin{center}
+\scalebox{.8}
+{
+\begin{tabular}{|c|c|c|c|}
+\cline{1-4}
+& \textbf{чрезвычайно} & \textbf{очень} & \textbf{глупый} \\
+& \textbf{глупый} & \textbf{глупый} & \\
+\cline{1-4}
+\textbf{чрезвычайно} & \times & \times & \times \\
+\textbf{глупый} & & & \\
+\cline{1-4}
+\textbf{очень} & & \times & \times \\
+\textbf{глупый} & & & \\
+\cline{1-4}
+\textbf{глупый} & & & \times \\
+\cline{1-4}
+\end{tabular}
+}
+\end{center}
+
+Решётка такой порядковой шкалы:
+
+\begin{center}
+\begin{tikzpicture}
+\draw[color=black, very thick](0,0) -- (3,0);
+\draw[color=black, very thick](3,0) -- (6,0);
+\draw[color=black, very thick](6,0) -- (9,0);
+
+\draw[fill=black, color=black, very thick](0,0) circle (.05);
+\draw[fill=black, color=black, very thick](3,0) circle (.05);
+\draw[fill=black, color=black, very thick](6,0) circle (.05);
+\draw[fill=black, color=black, very thick](9,0) circle (.05);
+
+\node[scale=1.1] at (0,-.6) {$\varnothing$};
+\node[scale=1.1] at (3,-.6) {Г};
+\node[scale=1.1] at (6,-.6) {ОГ};
+\node[scale=1.1] at (9,-.6) {ЧГ};
+\end{tikzpicture}
+\end{center}
+
+
+\primerT{бипорядковой шкалы}
+
+Пусть $G$ - это множество студентов,
+
+$n=\{$чрезвычайно глупый, очень глупый, глупый$\}$, $m=\{$умный, очень умный$\}$.\newpage
+
+Тогда шкала $M_{n,m}=(n,n,\le)\uplus(m,m,\ge)$ будет выглядеть так:
+
+\begin{center}
+\scalebox{.8}
+{
+\begin{tabular}{|c|c|c|c|c|c|}
+\cline{1-6}
+& \textbf{чрезвычайно} & \textbf{очень} & \textbf{глупый} & \textbf{умный} & \textbf{очень} \\
+& \textbf{глупый} & \textbf{глупый} & & & \textbf{умный} \\
+\cline{1-6}
+\textbf{чрезвычайно} & \times & \times & \times & & \\
+\textbf{глупый} & & & & & \\
+\cline{1-6}
+\textbf{очень} & & \times & \times & & \\
+\textbf{глупый} & & & & & \\
+\cline{1-6}
+\textbf{глупый} & & & \times & & \\
+\cline{1-6}
+\textbf{умный} & & & & \times & \\
+\cline{1-6}
+\textbf{очень} & & & & \times & \times \\
+\textbf{умный} & & & & & \\
+\cline{1-6}
+\end{tabular}
+}
+\end{center}
+
+Решётка этой шкалы также не очень замысловатая:
+
+\begin{center}
+\begin{tikzpicture}
+\draw[color=black, very thick](0,0) -- (2,-1);
+\draw[color=black, very thick](2,-1) -- (4,-1);
+\draw[color=black, very thick](4,-1) -- (6,-1);
+\draw[color=black, very thick](6,-1) -- (8,0);
+\draw[color=black, very thick](0,0) -- (2,1);
+\draw[color=black, very thick](2,1) -- (6,1);
+\draw[color=black, very thick](6,1) -- (8,0);
+
+\draw[fill=black, color=black, very thick](0,0) circle (.05);
+\draw[fill=black, color=black, very thick](2,-1) circle (.05);
+\draw[fill=black, color=black, very thick](4,-1) circle (.05);
+\draw[fill=black, color=black, very thick](6,-1) circle (.05);
+\draw[fill=black, color=black, very thick](2,1) circle (.05);
+\draw[fill=black, color=black, very thick](6,1) circle (.05);
+\draw[fill=black, color=black, very thick](8,0) circle (.05);
+
+\node[scale=1.1] at (0,-.6) {$\varnothing$};
+\node[scale=1.1] at (2,-1.6) {Г};
+\node[scale=1.1] at (4,-1.6) {ОГ};
+\node[scale=1.1] at (6,-1.6) {ЧГ};
+\node[scale=1.1] at (2,.4) {У};
+\node[scale=1.1] at (6,.4) {ОУ};
+\node[scale=1.1] at (8,-.4) {$M$};
+\end{tikzpicture}
+\end{center}\\
+
+\opr
+
+Рассмотрим многозначный контекст $\mathbb{M}=(G,M,W,I)$ и множество шкал $\mathbb{S}=\{\mathbb{S}_m\;|\;m\in M\}$. \textbf{Формальным контекстом, порождённым} из контекста $\mathbb{M}$ с учётом шкалирования $\mathbb{S}$, называется контекст $\mathbb{K}_{\mathbb{M}}=(G,N,J)$, где $N=\underset{m\in M}{\bigs\bigcup}\langle\{m\}\times W_m\rangle$,\\
+
+$J=\{(g,\langle m,n\rangle)\;|\;\exists w\in W:(g,m,w)\in I\text{ и } wI_wn\}$.
+
+Фактически, это "разворачивание"{} многозначного контекста в однозначный.
+
+\primer
+
+Пусть многозначный контекст $\mathbb{M}=(G,M,W,I)$ задан следующим образом:
+
+$G=\{\downarrow,\to,\oplus\}$ - бинарные логические операции;
+
+$M=\{$Рефлексивность, Симметричность, Сохраняет 0$\}$ - свойства функций;
+
+Отношение $I$ задано следующим образом:
+
+\begin{center}
+\scalebox{.8}
+{
+\begin{tabular}{|c|c|c|c|}
+\cline{1-4}
+\textbf{Бинарная} & \textbf{Рефлексивность} & \textbf{Симметричность} & \textbf{Сохраняет} \\
+\textbf{операция} & & & \textbf{0} \\
+\cline{1-4}
+\textbf{$\downarrow$} & Не рефлексивная & Симметричная & Нет \\
+\cline{1-4}
+\textbf{$\to$} & Рефлексивная & Антисимметричная & Нет \\
+\cline{1-4}
+\textbf{$\oplus$} & Иррефлексивная & Симметричная & Да \\
+\cline{1-4}
+\end{tabular}
+}
+\end{center}\\
+
+Тогда отношение $J$ формального контекста $\mathbb{K}_{\mathbb{M}}$ будет задано так (все шкалы номинальные):
+
+\begin{center}
+\scalebox{.8}
+{
+\begin{tabular}{|c||c|c|c||c|c|c||c|c|}
+\cline{1-9}
+\textbf{Бинарная} & \multicolumn{3}{c||}{\textbf{Рефлексивность}} & \multicolumn{3}{c||}{\textbf{Симметричность}} & \multicolumn{2}{c|}{\textbf{Сохраняет 0}} \\
+\cline{2-9}
+\textbf{операция} & рефл. & ирр. & не рефл. & симм. & антисимм. & не симм. & да & нет \\
+\cline{1-9}
+\textbf{$\downarrow$} & & & \times & \times & & & & \times \\
+\cline{1-9}
+\textbf{$\to$} & \times & & & & \times & & & \times \\
+\cline{1-9}
+\textbf{$\oplus$} & & \times & & \times & & & \times & \\
+\cline{1-9}
+\end{tabular}
+}
+\end{center}\\\\
+
+К нынешнему времени АФП нашёл применение в таких областях, как проектирование баз данных, программная инженерия, поиск информации, лингвистика и многих других.
+
+Решётки формальных понятий помогают выстроить объекты в иерархию, в которой мы идём от частных понятий к более общим. По ним гораздо проще определить объекты, которые удовлетворяют определённым условиям, чем если бы мы искали
+их в исходных таблицах. Поэтому многие фирмы специально заказывают подобные формальные контексты, например, чтобы можно было представить другим технические свойства автомобильных двигателей.
+
+В лингвистике АФП используется для анализа фонетических и грамматических особенностей языков. Также он помогает в лексическом анализе языка, как как лексика легко поддаётся иерархии и классификации.
+
+Можно много чего ещё рассказать об темах, что мы прошли. Многие из них уже не актуальны и на данный момент пылятся на полке, а какие то по сей день имеют применение в алгоритмах обработки знаний. Но именно благодаря некоторым достижениям нечёткой логики, АФП и метода резолюций в обработке поисковых запросов мы смогли склепать Вам склепать столь прекрасное творение под названием "\textit{методичка по ЛОПу}"{} :) \\
 
 \begin{center}
     \textit{Мы, мужчины, не умеем сказать «прощай», оставаясь при этом джентльменами. Может, Кэри Грант или Дэвид Нивен знали, как это делается, но я сомневаюсь, что им было под силу сказать: «Прощай, математическая логика», — сохраняя при этом обаяние.}
 \end{center}
-\leavevmode\\\\\leavevmode\\\\\leavevmode\\\\\leavevmode\\\\
+\leavevmode\\\\\leavevmode\\\\\leavevmode\\\\\leavevmode\\\\\leavevmode\\\\\leavevmode\\\\
 \begin{flushright}
 	Создатель методички: Большим М.А., 2020\\
 	Автор 2го издания: Муратов М.А., 2022
