@@ -74,8 +74,8 @@
 \newcommand{\bezdok}{\textsc{Без доказательства.}}
 \newcommand{\rightdok}{\boxed{(\Rightarrow)}}
 \newcommand{\leftdok}{\boxed{(\Leftarrow)}}
-\newcommand{\galoisup}{^\uparrow}
-\newcommand{\galoisdown}{^\downarrow}
+\newcommand{\galoisup}{{^\uparrow}}
+\newcommand{\galoisdown}{{^\downarrow}}
 
 \newcommand{\ovl}[1]{\overline{#1}}
 
@@ -4499,7 +4499,7 @@ $Stavi(P_1,P_2)=\exists s\Big(t<s\ampersand\exists u\big(t<u<s\ampersand\lnot P_
 \textbf{1} & 1 & 1 & 1 & & & & & \textbf{1} & 0 & 1/2 & 1 & & & & & \textbf{1} & 0 & 1/2 & 0 \\ 
 \cline{1-4} \cline{9-12} \cline{17-20} 
 \end{tabular}
-\end{center}\\
+\end{center}
 
 \opr
 
@@ -4556,7 +4556,7 @@ $\exists \varphi$ такие, что $\varphi$ т. и. в классическо
 \textbf{1} & 1 & 1/2 & 1 & & & & & \textbf{1} & 0 & 1/2 & 1 \\ 
 \cline{1-4} \cline{9-12}
 \end{tabular}
-\end{center}\\
+\end{center}
 
 \predl
 
@@ -4604,7 +4604,7 @@ $\varphi$ т. и. в логике Бочвара $\Rightarrow \varphi$ т. и. �
 \textbf{1} & 1 & 1 & 1 & & & & & \textbf{1} & 0 & 1/2 & 1 & & & & & \textbf{1} & 0 & 1/2 & 0 \\ 
 \cline{1-4} \cline{9-12} \cline{17-20} 
 \end{tabular}
-\end{center}\\
+\end{center}
 
 Обратите внимание, что здесь $(1/2\rightarrow 1/2)=1/2$, а не 1, как в логике $L_3$, это их единственное различие.\newpage
 
@@ -4899,34 +4899,34 @@ $I\subseteq G\times M$ - отношение между множествами.\\
 
 \begin{tabular}{|c|c|cccc|llll}
 \cline{1-6}
-&G\backslash M & a & b & c & d & & & & \\
+& $G\backslash M$ & a & b & c & d & & & & \\
 \cline{1-6}
-    1&\begin{tikzpicture}
+    1 & \begin{tikzpicture}
     \draw[color=black, very thick](0, 0) -- (.5, 0);
     \draw[color=black, very thick](0, 0) -- (.25, .43);
     \draw[color=black, very thick](.25, .43) -- (.5, 0);
     \end{tikzpicture}
-& \times & & & \times & & & & a - ровно 3 стороны, \\
-    2&\begin{tikzpicture}
+& $\times$ & & & $\times$ & & & & a - ровно 3 стороны, \\
+    2 & \begin{tikzpicture}
     \draw[color=black, very thick](0, 0) -- (0, .5);
     \draw[color=black, very thick](0, 0) -- (.5, 0);
     \draw[color=black, very thick](.5, 0) -- (0, .5);
     \end{tikzpicture}
-& \times & & \times & & & & & b - ровно 4 стороны, \\
-    3&\begin{tikzpicture}
+& $\times$ & & $\times$ & & & & & b - ровно 4 стороны, \\
+    3 & \begin{tikzpicture}
     \draw[color=black, very thick](0, 0) -- (0, .5);
     \draw[color=black, very thick](0, 0) -- (1, 0);
     \draw[color=black, very thick](1, .5) -- (0, .5);
     \draw[color=black, very thick](1, .5) -- (1, 0);
     \end{tikzpicture}
-& & \times & \times & & & & & c - имеет прямой угол, \\
-    4&\begin{tikzpicture}
+& & $\times$ & $\times$ & & & & & c - имеет прямой угол, \\
+    4 & \begin{tikzpicture}
     \draw[color=black, very thick](0, 0) -- (0, .5);
     \draw[color=black, very thick](0, 0) -- (.5, 0);
     \draw[color=black, very thick](.5, .5) -- (0, .5);
     \draw[color=black, very thick](.5, .5) -- (.5, 0);
     \end{tikzpicture}
-& & \times & \times & \times & & & & d -  все стороны равны. \\
+& & $\times$ & $\times$ & $\times$ & & & & d -  все стороны равны. \\
 \cline{1-6}
 \end{tabular}\\
 
@@ -4951,11 +4951,11 @@ $I\subseteq G\times M$ - отношение между множествами.\\
 \cline{1-5}
 \textbf{$I$} & \textbf{$y_1$} & \textbf{$y_2$} & \textbf{$y_3$} & \textbf{$y_4$} \\
 \cline{1-5}
-\textbf{$x_1$} & \times & \times & $\times$ & $\times$ \\
-\textbf{$x_2$} & \times & & $\times$ & $\times$ \\
-\textbf{$x_3$} & & \times & $\times$ & $\times$ \\
-\textbf{$x_4$} & & \times & $\times$ & $\times$ \\
-\textbf{$x_5$} & \times & & & \\
+\textbf{$x_1$} & $\times$ & $\times$ & $\times$ & $\times$ \\
+\textbf{$x_2$} & $\times$ & & $\times$ & $\times$ \\
+\textbf{$x_3$} & & $\times$ & $\times$ & $\times$ \\
+\textbf{$x_4$} & & $\times$ & $\times$ & $\times$ \\
+\textbf{$x_5$} & $\times$ & & & \\
 \cline{1-5}
 \end{tabular}
 \end{center}
@@ -4996,11 +4996,11 @@ $\mA_i\in K(\sg)$ такие, что $\mA_i\vD P_j(a_1, ..., a_{n_j})\Leftrighta
 \cline{1-5}
 \textbf{$I$} & \textbf{$y_1$} & \textbf{$y_2$} & \textbf{$y_3$} & \textbf{$y_4$} \\
 \cline{1-5}
-\textbf{$x_1$} & \times & \times & \textcolor{blue}{$\times$} & \textcolor{blue}{$\times$} \\
-\textbf{$x_2$} & \times & & \textcolor{blue}{$\times$} & \textcolor{blue}{$\times$} \\
-\textbf{$x_3$} & & \times & \textcolor{blue}{$\times$} & \textcolor{blue}{$\times$} \\
-\textbf{$x_4$} & & \times & \textcolor{blue}{$\times$} & \textcolor{blue}{$\times$} \\
-\textbf{$x_5$} & \times & & & \\
+\textbf{$x_1$} & $\times$ & $\times$ & \textcolor{blue}{$\times$} & \textcolor{blue}{$\times$} \\
+\textbf{$x_2$} & $\times$ & & \textcolor{blue}{$\times$} & \textcolor{blue}{$\times$} \\
+\textbf{$x_3$} & & $\times$ & \textcolor{blue}{$\times$} & \textcolor{blue}{$\times$} \\
+\textbf{$x_4$} & & $\times$ & \textcolor{blue}{$\times$} & \textcolor{blue}{$\times$} \\
+\textbf{$x_5$} & $\times$ & & & \\
 \cline{1-5}
 \end{tabular}
 \end{center}
@@ -5108,34 +5108,34 @@ $\leftdok$ Пусть $(A,B)=(B\galoisdown,B\galoisdown\galoisup)$, тогда $
 
 \begin{tabular}{|c|c|cccc|llll}
 \cline{1-6}
-&G\backslash M & a & b & c & d & & & & \\
+& $G\backslash M$ & a & b & c & d & & & & \\
 \cline{1-6}
     1&\begin{tikzpicture}
     \draw[color=black, very thick](0, 0) -- (.5, 0);
     \draw[color=black, very thick](0, 0) -- (.25, .43);
     \draw[color=black, very thick](.25, .43) -- (.5, 0);
     \end{tikzpicture}
-& \times & & & \times & & & & a - ровно 3 стороны, \\
+& $\times$ & & & $\times$ & & & & a - ровно 3 стороны, \\
     2&\begin{tikzpicture}
     \draw[color=black, very thick](0, 0) -- (0, .5);
     \draw[color=black, very thick](0, 0) -- (.5, 0);
     \draw[color=black, very thick](.5, 0) -- (0, .5);
     \end{tikzpicture}
-& \times & & \times & & & & & b - ровно 4 стороны, \\
+& $\times$ & & $\times$ & & & & & b - ровно 4 стороны, \\
     3&\begin{tikzpicture}
     \draw[color=black, very thick](0, 0) -- (0, .5);
     \draw[color=black, very thick](0, 0) -- (1, 0);
     \draw[color=black, very thick](1, .5) -- (0, .5);
     \draw[color=black, very thick](1, .5) -- (1, 0);
     \end{tikzpicture}
-& & \times & \times & & & & & c - имеет прямой угол, \\
+& & $\times$ & $\times$ & & & & & c - имеет прямой угол, \\
     4&\begin{tikzpicture}
     \draw[color=black, very thick](0, 0) -- (0, .5);
     \draw[color=black, very thick](0, 0) -- (.5, 0);
     \draw[color=black, very thick](.5, .5) -- (0, .5);
     \draw[color=black, very thick](.5, .5) -- (.5, 0);
     \end{tikzpicture}
-& & \times & \times & \times & & & & d - все стороны равны. \\
+& & $\times$ & $\times$ & $\times$ & & & & d - все стороны равны. \\
 \cline{1-6}
 \end{tabular}\\
 
@@ -5315,11 +5315,11 @@ $dom(m)=\{g\in G\;|\;\exists w\in W:(g,m,w)\in I\}$.\newpage
 \cline{1-4}
 & \textbf{яблочный} & \textbf{виноградный} & \textbf{персиковый} \\
 \cline{1-4}
-\textbf{яблочный} & \times & & \\
+\textbf{яблочный} & $\times$ & & \\
 \cline{1-4}
-\textbf{виноградный} & & \times & \\
+\textbf{виноградный} & & $\times$ & \\
 \cline{1-4}
-\textbf{персиковый} & & & \times \\
+\textbf{персиковый} & & & $\times$ \\
 \cline{1-4}
 \end{tabular}
 }
@@ -5362,13 +5362,13 @@ $dom(m)=\{g\in G\;|\;\exists w\in W:(g,m,w)\in I\}$.\newpage
 & \textbf{чрезвычайно} & \textbf{очень} & \textbf{глупый} \\
 & \textbf{глупый} & \textbf{глупый} & \\
 \cline{1-4}
-\textbf{чрезвычайно} & \times & \times & \times \\
+\textbf{чрезвычайно} & $\times$ & $\times$ & $\times$ \\
 \textbf{глупый} & & & \\
 \cline{1-4}
-\textbf{очень} & & \times & \times \\
+\textbf{очень} & & $\times$ & $\times$ \\
 \textbf{глупый} & & & \\
 \cline{1-4}
-\textbf{глупый} & & & \times \\
+\textbf{глупый} & & & $\times$ \\
 \cline{1-4}
 \end{tabular}
 }
@@ -5411,17 +5411,17 @@ $n=\{$чрезвычайно глупый, очень глупый, глупый
 & \textbf{чрезвычайно} & \textbf{очень} & \textbf{глупый} & \textbf{умный} & \textbf{очень} \\
 & \textbf{глупый} & \textbf{глупый} & & & \textbf{умный} \\
 \cline{1-6}
-\textbf{чрезвычайно} & \times & \times & \times & & \\
+\textbf{чрезвычайно} & $\times$ & $\times$ & $\times$ & & \\
 \textbf{глупый} & & & & & \\
 \cline{1-6}
-\textbf{очень} & & \times & \times & & \\
+\textbf{очень} & & $\times$ & $\times$ & & \\
 \textbf{глупый} & & & & & \\
 \cline{1-6}
-\textbf{глупый} & & & \times & & \\
+\textbf{глупый} & & & $\times$ & & \\
 \cline{1-6}
-\textbf{умный} & & & & \times & \\
+\textbf{умный} & & & & $\times$ & \\
 \cline{1-6}
-\textbf{очень} & & & & \times & \times \\
+\textbf{очень} & & & & $\times$ & $\times$ \\
 \textbf{умный} & & & & & \\
 \cline{1-6}
 \end{tabular}
@@ -5456,7 +5456,7 @@ $n=\{$чрезвычайно глупый, очень глупый, глупый
 \node[scale=1.1] at (6,.4) {ОУ};
 \node[scale=1.1] at (8,-.4) {$M$};
 \end{tikzpicture}
-\end{center}\\
+\end{center}
 
 \opr
 
@@ -5492,7 +5492,7 @@ $M=\{$Рефлексивность, Симметричность, Сохраня
 \cline{1-4}
 \end{tabular}
 }
-\end{center}\\
+\end{center}
 
 Тогда отношение $J$ формального контекста $\mathbb{K}_{\mathbb{M}}$ будет задано так (все шкалы номинальные):
 
@@ -5505,15 +5505,15 @@ $M=\{$Рефлексивность, Симметричность, Сохраня
 \cline{2-9}
 \textbf{операция} & рефл. & ирр. & не рефл. & симм. & антисимм. & не симм. & да & нет \\
 \cline{1-9}
-\textbf{$\downarrow$} & & & \times & \times & & & & \times \\
+\textbf{$\downarrow$} & & & $\times$ & $\times$ & & & & $\times$ \\
 \cline{1-9}
-\textbf{$\to$} & \times & & & & \times & & & \times \\
+\textbf{$\to$} & $\times$ & & & & $\times$ & & & $\times$ \\
 \cline{1-9}
-\textbf{$\oplus$} & & \times & & \times & & & \times & \\
+\textbf{$\oplus$} & & $\times$ & & $\times$ & & & $\times$ & \\
 \cline{1-9}
 \end{tabular}
 }
-\end{center}\\\\
+\end{center}
 
 К нынешнему времени АФП нашёл применение в таких областях, как проектирование баз данных, программная инженерия, поиск информации, лингвистика и многих других.
 
